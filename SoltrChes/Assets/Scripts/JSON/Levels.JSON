@@ -1,0 +1,17 @@
+[
+    {
+        "levelNumber": 1,
+        "levelName": "Level 1",
+        "difficulty": "Easy",
+        "board": {
+            "width": 8,
+            "height": 8
+        },
+        "pieces": [
+            {"type": "Queen", "position": [6, 3]},
+            {"type": "Pawn", "position": [5, 3]},
+            {"type": "Rook", "position": [4, 6]},
+            {"type": "King", "position": [6, 6]}            
+        ]
+    }
+]
