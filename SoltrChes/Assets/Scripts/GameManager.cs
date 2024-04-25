@@ -30,12 +30,12 @@ public class GameManager : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.Space))
         {
             //Loop back to level 1 if current level is the last level
-            if (LevelManager.Instance.GetCurrentLevel() == LevelManager.Instance.GetLevels().Length)
+            if (currentLevel == LevelManager.Instance.GetLevels().Length)
             {
-                LevelManager.Instance.LoadLevel(1);
+                ChangeLevel(1);
                 return;
             }
-            LevelManager.Instance.LoadLevel(LevelManager.Instance.GetCurrentLevel() + 1);
+            ChangeLevel(currentLevel + 1);
         }
     }
 
@@ -45,7 +45,7 @@ public class GameManager : MonoBehaviour
         LevelManager.Instance.LoadLevel(level);
     }
 
-    public void GetCurrentLevel()
+    public int GetCurrentLevel()
     {
         return currentLevel;
     }
