@@ -2,8 +2,8 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PieceData
+public class BoardData
 {
-    public string type;
-    public int[] position;
+    public int width;
+    public int height;
 }

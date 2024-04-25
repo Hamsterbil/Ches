@@ -2,8 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PieceData
+public class Piece : MonoBehaviour
 {
-    public string type;
-    public int[] position;
+    
 }
