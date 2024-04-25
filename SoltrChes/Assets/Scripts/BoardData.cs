@@ -7,3 +7,11 @@ public class BoardData
     public int width;
     public int height;
 }
+
+public class Square
+{
+    public int[] position;
+    public string color;
+    public bool isOccupied;
+    public PieceData piece;
+}

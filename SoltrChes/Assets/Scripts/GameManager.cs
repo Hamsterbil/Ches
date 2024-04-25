@@ -5,7 +5,6 @@ using UnityEngine;
 public class GameManager : MonoBehaviour
 {
     public static GameManager Instance { get; private set; }
-    private LevelManager levelManager;
 
     void Awake()
     {
@@ -21,11 +20,21 @@ public class GameManager : MonoBehaviour
 
     void Start()
     {
-        levelManager.LoadLevel(1);
+        LevelManager.Instance.LoadLevel(1);
     }
 
     void Update()
     {
-
+        //If spacebar clicked, go to next level
+        if (Input.GetKeyDown(KeyCode.Space))
+        {
+            //Loop back to level 1 if current level is the last level
+            if (LevelManager.Instance.GetCurrentLevel() == LevelManager.Instance.GetLevels().Length)
+            {
+                LevelManager.Instance.LoadLevel(1);
+                return;
+            }
+            LevelManager.Instance.LoadLevel(LevelManager.Instance.GetCurrentLevel() + 1);
+        }
     }
 }
