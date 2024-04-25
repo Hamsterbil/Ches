@@ -8,4 +8,14 @@ public class CompletionManager : MonoBehaviour
     {
         
     }
+
+    public void WinGame()
+    {
+        GameManager.Instance.ChangeLevel(GameManager.Instance.GetCurrentLevel() + 1);
+    }
+
+    public void LoseGame()
+    {
+        GameManager.Instance.ChangeLevel(GameManager.Instance.GetCurrentLevel());
+    }
 }

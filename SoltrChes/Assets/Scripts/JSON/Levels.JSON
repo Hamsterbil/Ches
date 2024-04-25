@@ -13,7 +13,7 @@
             {"type": "Rook", "position": [4, 6]},
             {"type": "King", "position": [6, 6]}            
         ]
-    }
+    },
     {
         "levelNumber": 2,
         "levelName": "Level 2",
@@ -28,7 +28,7 @@
             {"type": "Rook", "position": [6, 6]},
             {"type": "Knight", "position": [3, 3]}            
         ]
-    }
+    },
     {
         "levelNumber": 3,
         "levelName": "Level 3",
@@ -44,7 +44,7 @@
             {"type": "Bishop", "position": [3, 5]},   
             {"type": "Bishop", "position": [3, 3]}         
         ]
-    }
+    },
     {
         "levelNumber": 4,
         "levelName": "Level 4",
@@ -60,7 +60,7 @@
             {"type": "Rook", "position": [3, 3]},   
             {"type": "Bishop", "position": [6, 4]}         
         ]
-    }
+    },
     {
         "levelNumber": 5,
         "levelName": "Level 5",
@@ -77,7 +77,7 @@
             {"type": "King", "position": [3, 4]},    
             {"type": "Bishop", "position": [3, 5]}   
         ]   
-    }
+    },
     {
         "levelNumber": 6,
         "levelName": "Level 6",
@@ -94,7 +94,7 @@
             {"type": "Bishop", "position": [4, 6]},    
             {"type": "King", "position": [6, 5]}
         ]
-    }
+    },
     {
         "levelNumber": 7,
         "levelName": "Level 7",
@@ -112,7 +112,7 @@
             {"type": "Pawn", "position": [3, 4]},
             {"type": "Pawn", "position": [6, 4]}
         ]
-    }
+    },
     {
         "levelNumber": 8,
         "levelName": "Level 8",
@@ -130,7 +130,7 @@
             {"type": "Rook", "position": [6, 6]},
             {"type": "Bishop", "position": [6, 3]}
         ]
-    }
+    },
     {
         "levelNumber": 9,
         "levelName": "Level 9",
@@ -149,7 +149,7 @@
             {"type": "Queen", "position": [6, 6]},
             {"type": "King", "position": [6, 4]}
         ]
-    }
+    },
     {
         "levelNumber": 10,
         "levelName": "Level 10",
