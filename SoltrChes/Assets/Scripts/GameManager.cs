@@ -5,6 +5,7 @@ using UnityEngine;
 public class GameManager : MonoBehaviour
 {
     public static GameManager Instance { get; private set; }
+    private int currentLevel;
 
     void Awake()
     {
@@ -20,7 +21,7 @@ public class GameManager : MonoBehaviour
 
     void Start()
     {
-        LevelManager.Instance.LoadLevel(1);
+        ChangeLevel(1);
     }
 
     void Update()
@@ -36,5 +37,16 @@ public class GameManager : MonoBehaviour
             }
             LevelManager.Instance.LoadLevel(LevelManager.Instance.GetCurrentLevel() + 1);
         }
+    }
+
+    public void ChangeLevel(int level)
+    {
+        currentLevel = level;
+        LevelManager.Instance.LoadLevel(level);
+    }
+
+    public void GetCurrentLevel()
+    {
+        return currentLevel;
     }
 }

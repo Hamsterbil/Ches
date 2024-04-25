@@ -10,6 +10,7 @@ public class LevelManager : MonoBehaviour
     private LevelData[] levels;
     private BoardData board;
     private PieceData[] pieces;
+    private Square[] squares;
 
     public GameObject squarePrefab;
     public GameObject[] piecePrefabs;
@@ -56,24 +57,25 @@ public class LevelManager : MonoBehaviour
 
     private void CreateBoard(int width, int height)
     {
-        //Squares parent
-        GameObject squares = new GameObject("Squares");
-        squares.transform.parent = this.transform;
+        squares = new Square[width * height];
+        GameObject squaresParent = new GameObject("Squares");
+        squaresParent.transform.parent = this.transform;
         for (int x = 0; x < width; x++)
         {
             for (int z = 0; z < height; z++)
             {
                 Vector3 position = new Vector3(x, 0, z);
-                GameObject squareObject = Instantiate(squarePrefab, position, Quaternion.identity, squares.transform);
+                GameObject squareObject = Instantiate(squarePrefab, position, Quaternion.identity, squaresParent.transform);
                 squareObject.name = "Square " + x + ", " + z;
-                //Color
                 if ((x + z) % 2 == 0)
                 {
-                    squareObject.GetComponent<Renderer>().material.color = new Color(0.8f, 0.8f, 0.8f);                    
+                    squareObject.GetComponent<Renderer>().material.color = new Color(0.8f, 0.8f, 0.8f);
+                    squares[x * height + z] = new Square(new int[] { x, z }, "White", false, null);
                 }
                 else
                 {
                     squareObject.GetComponent<Renderer>().material.color = new Color(0.2f, 0.2f, 0.2f);
+                    squares[x * height + z] = new Square(new int[] { x, z }, "Black", false, null);
                 }
             }
         }
@@ -118,9 +120,9 @@ public class LevelManager : MonoBehaviour
         return new int[] { board.width, board.height };
     }
 
-    public int GetCurrentLevel()
+    public string GetLevelName()
     {
-        return currentLevel;
+        return levels[currentLevel - 1].levelName;
     }
 
     public LevelData[] GetLevels()
