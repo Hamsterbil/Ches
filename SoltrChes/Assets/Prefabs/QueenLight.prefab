@@ -12,9 +12,10 @@ GameObject:
   - component: {fileID: 33386584874682660}
   - component: {fileID: 23714218359197728}
   - component: {fileID: 4937032548908665660}
+  - component: {fileID: 8957576713528257562}
   m_Layer: 0
   m_Name: QueenLight
-  m_TagString: Untagged
+  m_TagString: Piece
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -96,3 +97,19 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 94cf20e9fdd4d6148b3e3351351044d5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  currentPosition: {x: 0, y: 0}
+  validMoves: []
+--- !u!136 &8957576713528257562
+CapsuleCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1945632463053948}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  m_Radius: 0.43817496
+  m_Height: 1.7013237
+  m_Direction: 1
+  m_Center: {x: 0, y: 0.8506619, z: 0}

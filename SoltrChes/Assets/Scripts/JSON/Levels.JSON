@@ -140,14 +140,14 @@
             "height": 8
         },
         "pieces": [
-            {"type": "Rook", "position": [5, 5]},
-            {"type": "Rook", "position": [6, 4]},
-            {"type": "Pawn", "position": [5, 3]},
-            {"type": "Pawn", "position": [6, 5]},   
+            {"type": "Rook", "position": [2, 2]},
+            {"type": "Rook", "position": [2, 3]},
+            {"type": "Pawn", "position": [2, 4]},
+            {"type": "Pawn", "position": [3, 5]},   
             {"type": "Bishop", "position": [3, 4]},    
-            {"type": "Bishop", "position": [6, 3]},
-            {"type": "Queen", "position": [6, 6]},
-            {"type": "King", "position": [6, 4]}
+            {"type": "Bishop", "position": [4, 4]},
+            {"type": "Knight", "position": [4, 5]},
+            {"type": "King", "position": [5, 2]}
         ]
     },
     {
