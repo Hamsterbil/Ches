@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 33080485989685302}
   - component: {fileID: 23126716194031272}
   - component: {fileID: 8890372157145171574}
+  - component: {fileID: 2720344784604166189}
   m_Layer: 0
   m_Name: KingLight
   m_TagString: Untagged
@@ -96,3 +97,19 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c9ead556949f4784eb605f27dc04df73, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  currentPosition: {x: 0, y: 0}
+  validMoves: []
+--- !u!136 &2720344784604166189
+CapsuleCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1389686872840900}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  m_Radius: 0.43817496
+  m_Height: 1.7193428
+  m_Direction: 1
+  m_Center: {x: 0, y: 0.8596714, z: 0}

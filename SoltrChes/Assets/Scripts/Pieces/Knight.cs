@@ -4,17 +4,9 @@ using UnityEngine;
 
 public class Knight : Piece
 {
-    // Start is called before the first frame update
     void Start()
     {
         GetMoveDirections();
-        GetValidMoves();
-    }
-
-    public override bool IsValidMove(Vector2Int newPosition)
-    {
-        List<Vector2Int> validMoves = GetValidMoves();
-        return validMoves.Contains(newPosition);
     }
 
     public override Vector2Int[] GetMoveDirections()
@@ -35,25 +27,19 @@ public class Knight : Piece
     }
     public override List<Vector2Int> GetValidMoves()
     {
-        List<Vector2Int> validMoves = new List<Vector2Int>();
-
+        validMoves = new List<Vector2Int>();
         Vector2Int[] directions = GetMoveDirections();
-
+        
         foreach (Vector2Int direction in directions)
         {
             Vector2Int pos = currentPosition;
             pos += direction;
 
-            if (!IswithinBounds(pos))
-            {
-                break;
-            }
-
             if (IsSquareOccupiedByEnemy(pos))
             {
                 validMoves.Add(pos);
-                break
             }
         }
         return validMoves;
     }
+}

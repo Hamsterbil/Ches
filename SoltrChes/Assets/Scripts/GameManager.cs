@@ -41,6 +41,7 @@ public class GameManager : MonoBehaviour
 
     public void ChangeLevel(int level)
     {
+        Debug.Log("Changing level to " + level);
         currentLevel = level;
         LevelManager.Instance.LoadLevel(level);
     }
@@ -48,5 +49,10 @@ public class GameManager : MonoBehaviour
     public int GetCurrentLevel()
     {
         return currentLevel;
+    }
+
+    public void CheckCompletion()
+    {
+
     }
 }

@@ -2,18 +2,12 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class King : MonoBehaviour
+public class King : Piece
 {
 
-    public void Start()
+    void Start()
     {
         GetMoveDirections();
-        GetValidMoves();
-    }
-    public override bool IsValidMove(Vector2Int newPosition)
-    {
-        List<Vector2Int> validMoves = GetValidMoves();
-        return validMoves.Contains(newPosition);
     }
 
     public override Vector2Int[] GetMoveDirections()
@@ -31,28 +25,21 @@ public class King : MonoBehaviour
         };
 
         return directions;
-    } // Says that the king can move in any direction by one square
+    }
 
-     public override List<Vector2Int> GetValidMoves()
+    public override List<Vector2Int> GetValidMoves()
     {
-        List<Vector2Int> validMoves = new List<Vector2Int>();
-
+        validMoves = new List<Vector2Int>();
         Vector2Int[] directions = GetMoveDirections();
-
-        while (true)
+        
+        foreach (Vector2Int direction in directions)
         {
             Vector2Int pos = currentPosition;
             pos += direction;
 
-            if (!IswithinBounds(pos))
-            {
-                break;
-            }
-
             if (IsSquareOccupiedByEnemy(pos))
             {
                 validMoves.Add(pos);
-                break
             }
         }
         return validMoves;

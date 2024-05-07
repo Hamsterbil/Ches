@@ -87,22 +87,22 @@ public class LevelManager : MonoBehaviour
         {
             switch (piece.type)
             {
-                case "Queen":
+                case "Pawn":
                     CreatePiece(piece, piecePrefabs[0]);
                     break;
-                case "Pawn":
+                case "Bishop":
                     CreatePiece(piece, piecePrefabs[1]);
                     break;
-                case "Rook":
+                case "Knight":
                     CreatePiece(piece, piecePrefabs[2]);
                     break;
-                case "King":
+                case "Rook":
                     CreatePiece(piece, piecePrefabs[3]);
                     break;
-                case "Bishop":
+                case "Queen":
                     CreatePiece(piece, piecePrefabs[4]);
                     break;
-                case "Knight":
+                case "King":
                     CreatePiece(piece, piecePrefabs[5]);
                     break;
             }
@@ -113,6 +113,12 @@ public class LevelManager : MonoBehaviour
     {
         Vector3 position = new Vector3(piece.position[0], 0.5f, piece.position[1]);
         GameObject pieceObject = Instantiate(prefab, position, Quaternion.identity, this.transform);
+        Piece pieceComponent = pieceObject.GetComponent<Piece>();
+        pieceComponent.InitPiece(new Vector2Int(piece.position[0], piece.position[1]), true);
+
+        Square square = squares[piece.position[0] * board.height + piece.position[1]];
+        square.isOccupied = true;
+        square.piece = pieceComponent;
     }
 
     public int[] GetBoardSize()
@@ -128,5 +134,37 @@ public class LevelManager : MonoBehaviour
     public LevelData[] GetLevels()
     {
         return levels;
+    }
+
+    public Square GetSquare(Vector2Int position)
+    {
+        return squares[position.x * board.height + position.y];
+    }
+
+    public void HighlightSquare(Vector2Int position)
+    {
+        GetSquare(position).Highlighted = true;
+        GameObject squareObject = GameObject.Find("Square " + position.x + ", " + position.y);
+        squareObject.GetComponent<Renderer>().material.color = new Color(1, 0, 0);
+    }
+
+    public void RemoveHighlights()
+    {
+        foreach (Square square in squares)
+        {
+            if (square.Highlighted)
+            {
+                square.Highlighted = false;
+                GameObject squareObject = GameObject.Find("Square " + square.position[0] + ", " + square.position[1]);
+                if (square.color == "White")
+                {
+                    squareObject.GetComponent<Renderer>().material.color = new Color(0.8f, 0.8f, 0.8f);
+                }
+                else
+                {
+                    squareObject.GetComponent<Renderer>().material.color = new Color(0.2f, 0.2f, 0.2f);
+                }
+            }
+        }
     }
 }

@@ -5,63 +5,52 @@ using UnityEngine;
 public class Queen : Piece
 {
     // Start is called before the first frame update
-
-    public override bool IsValidMove(Vector2Int newPosition)
+    void Start()
     {
-        List<Vector2Int> validMoves = GetValidMoves();
-        return validMoves.Contains(newPosition);
+        GetMoveDirections();
     }
-    public override Vector2Int[] GetMovedirections()
+    public override Vector2Int[] GetMoveDirections()
     {
-        Vector2int[] directions = new Vector2int[]
+        Vector2Int[] directions = new Vector2Int[]
         {
-            new Vector2int (1, 0) // Right
-            new Vector2int (-1, 0) // Left
-            new Vector2int (0, 1) // Up
-            new Vector2int (0, -1) // Down
-            new Vector2int (1, 1) // Up Right
-            new Vector2int (-1, 1) // Up Left
-            new Vector2int (1, -1) // Down Right
-            new Vector2int (-1, -1) // Down Left
+            new Vector2Int(1, 0), // Right
+            new Vector2Int(-1, 0), // Left
+            new Vector2Int(0, 1), // Up
+            new Vector2Int(0, -1), // Down
+            new Vector2Int(1, 1), // Up Right
+            new Vector2Int(-1, 1), // Up Left
+            new Vector2Int(1, -1), // Down Right
+            new Vector2Int(-1, -1) // Down Left
         };
 
         return directions;
     }
-    public override List<Vector2Int> GetValidMoves();
-    {
-        List<Vector2Int> validMoves = new List<Vector2Int>();
-        
-        Vector2Int[] directions = GetMovedirections();
 
-        foreach (Vector2Int[] directions = GetMoveDirections)
+    public override List<Vector2Int> GetValidMoves()
+    {
+        validMoves = new List<Vector2Int>();
+        Vector2Int[] directions = GetMoveDirections();
+
+        foreach (Vector2Int direction in directions)
         {
-            Vector2Int currentPosition = GetCurrentPosition();
+            Vector2Int pos = currentPosition;
 
             while (true)
             {
-                currentPosition += direction;
+                pos += direction;
 
-                if (!IsWithinBounds(currentPosition))
+                if (!IsWithinBounds(pos))
                 {
                     break;
                 }
 
-                if (IsSqaureEmpty(currentPosition))
+                if (IsSquareOccupiedByEnemy(pos))
                 {
-                    validMoves.Add(currentPosition);
-                }
-                else
-                {
-                    if (IsSqaureOccupiedByEnemy(currentPosition))
-                    {
-                        validMoves.Add(currentPosition);
-                    }
+                    validMoves.Add(pos);
                     break;
                 }
-
             }
         }
         return validMoves;
     }
-
 }
