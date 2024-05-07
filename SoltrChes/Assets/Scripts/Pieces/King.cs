@@ -4,15 +4,57 @@ using UnityEngine;
 
 public class King : MonoBehaviour
 {
-    // Start is called before the first frame update
-    void Start()
+
+    public void Start()
     {
-        
+        GetMoveDirections();
+        GetValidMoves();
+    }
+    public override bool IsValidMove(Vector2Int newPosition)
+    {
+        List<Vector2Int> validMoves = GetValidMoves();
+        return validMoves.Contains(newPosition);
     }
 
-    // Update is called once per frame
-    void Update()
+    public override Vector2Int[] GetMoveDirections()
     {
-        
+        Vector2Int[] directions = new Vector2Int[]
+        {
+            new Vector2Int(1, 0), // Right
+            new Vector2Int(-1, 0), // Left
+            new Vector2Int(0, 1), // Up
+            new Vector2Int(0, -1), // Down
+            new Vector2Int(1, 1), // Up Right
+            new Vector2Int(-1, 1), // Up Left
+            new Vector2Int(1, -1), // Down Right
+            new Vector2Int(-1, -1) // Down Left
+        };
+
+        return directions;
+    } // Says that the king can move in any direction by one square
+
+     public override List<Vector2Int> GetValidMoves()
+    {
+        List<Vector2Int> validMoves = new List<Vector2Int>();
+
+        Vector2Int[] directions = GetMoveDirections();
+
+        while (true)
+        {
+            Vector2Int pos = currentPosition;
+            pos += direction;
+
+            if (!IswithinBounds(pos))
+            {
+                break;
+            }
+
+            if (IsSquareOccupiedByEnemy(pos))
+            {
+                validMoves.Add(pos);
+                break
+            }
+        }
+        return validMoves;
     }
 }

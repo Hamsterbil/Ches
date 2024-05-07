@@ -31,7 +31,7 @@ public class Queen : Piece
     {
         List<Vector2Int> validMoves = new List<Vector2Int>();
         
-        Vector2Int[] directions = GetMovedirections();¨
+        Vector2Int[] directions = GetMovedirections();
 
         foreach (Vector2Int[] directions = GetMoveDirections)
         {
