@@ -12,25 +12,25 @@ public abstract class Piece : MonoBehaviour
     {
         currentPosition = position;
         this.isWhite = isWhite;
-        validMoves = new List<Vector2Int>();
+        GetMoveDirections();
     }
 
-    public bool IsValidMove(Vector2Int newPosition)
-    {
-        return validMoves.Contains(newPosition);
-    }
+    public abstract Vector2Int[] GetMoveDirections();
+    public abstract List<Vector2Int> GetValidMoves();
 
     public Vector2Int GetCurrentPosition()
     {
         return currentPosition;
     }
 
-    public abstract Vector2Int[] GetMoveDirections();
-    public abstract List<Vector2Int> GetValidMoves();
-
     protected bool IsWithinBounds(Vector2Int position)
     {
         return position.x >= 0 && position.x < LevelManager.Instance.GetBoardSize()[0] && position.y >= 0 && position.y < LevelManager.Instance.GetBoardSize()[1];
+    }
+
+    public bool IsValidMove(Vector2Int newPosition)
+    {
+        return validMoves.Contains(newPosition);
     }
 
     protected bool IsSquareEmpty(Vector2Int position)
@@ -49,31 +49,21 @@ public abstract class Piece : MonoBehaviour
         return false;
     }
 
-    public void HighlightValidMoves()
-    {
-        LevelManager.Instance.RemoveHighlights();
-        foreach (Vector2Int move in validMoves)
-        {
-            LevelManager.Instance.HighlightSquare(move);
-        }
-    }
-
-    public void Move(Vector2Int newPosition)
+    public void Move(Square newSquare)
     {
         Square currentSquare = LevelManager.Instance.GetSquare(currentPosition);
-        Square newSquare = LevelManager.Instance.GetSquare(newPosition);
-
         currentSquare.isOccupied = false;
         //Destroy piece
-        if (this != newSquare.piece)
+        if (newSquare.piece && this != newSquare.piece)
         {
             Destroy(newSquare.piece.gameObject);
         }
-        newSquare.isOccupied = true;
         newSquare.piece = this;
 
+        Vector2Int newPosition = newSquare.position;
         currentPosition = newPosition;
         transform.position = new Vector3(newPosition.x, 0.5f, newPosition.y);
-        LevelManager.Instance.RemoveHighlights();
+        LevelManager.Instance.RemoveHighlights(this);
+        GameManager.Instance.CheckCompletion();
     }
 }

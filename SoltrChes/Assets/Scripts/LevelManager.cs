@@ -11,7 +11,6 @@ public class LevelManager : MonoBehaviour
     private BoardData board;
     private PieceData[] pieces;
     private Square[] squares;
-
     public GameObject squarePrefab;
     public GameObject[] piecePrefabs;
 
@@ -66,17 +65,10 @@ public class LevelManager : MonoBehaviour
             {
                 Vector3 position = new Vector3(x, 0, z);
                 GameObject squareObject = Instantiate(squarePrefab, position, Quaternion.identity, squaresParent.transform);
-                squareObject.name = "Square " + x + ", " + z;
-                if ((x + z) % 2 == 0)
-                {
-                    squareObject.GetComponent<Renderer>().material.color = new Color(0.8f, 0.8f, 0.8f);
-                    squares[x * height + z] = new Square(new int[] { x, z }, "White", false, null);
-                }
-                else
-                {
-                    squareObject.GetComponent<Renderer>().material.color = new Color(0.2f, 0.2f, 0.2f);
-                    squares[x * height + z] = new Square(new int[] { x, z }, "Black", false, null);
-                }
+                Square squareComponent = squareObject.GetComponent<Square>();
+                squareComponent.InitSquare(new Vector2Int(x, z), (x + z) % 2 == 0, false);
+
+                squares[x * height + z] = squareComponent;
             }
         }
     }
@@ -111,12 +103,12 @@ public class LevelManager : MonoBehaviour
 
     private void CreatePiece(PieceData piece, GameObject prefab)
     {
-        Vector3 position = new Vector3(piece.position[0], 0.5f, piece.position[1]);
-        GameObject pieceObject = Instantiate(prefab, position, Quaternion.identity, this.transform);
+        Vector2Int position = new Vector2Int(piece.position[0], piece.position[1]);
+        GameObject pieceObject = Instantiate(prefab, new Vector3(position.x, 0.5f, position.y), Quaternion.identity, this.transform);
         Piece pieceComponent = pieceObject.GetComponent<Piece>();
-        pieceComponent.InitPiece(new Vector2Int(piece.position[0], piece.position[1]), true);
+        pieceComponent.InitPiece(position, (piece.position[0] + piece.position[1]) % 2 == 0);
 
-        Square square = squares[piece.position[0] * board.height + piece.position[1]];
+        Square square = GetSquare(position);
         square.isOccupied = true;
         square.piece = pieceComponent;
     }
@@ -141,28 +133,35 @@ public class LevelManager : MonoBehaviour
         return squares[position.x * board.height + position.y];
     }
 
-    public void HighlightSquare(Vector2Int position)
+    public void HighlightSquares(Piece piece)
     {
-        GetSquare(position).Highlighted = true;
-        GameObject squareObject = GameObject.Find("Square " + position.x + ", " + position.y);
-        squareObject.GetComponent<Renderer>().material.color = new Color(1, 0, 0);
+        RemoveHighlights(piece);
+        foreach (Vector2Int move in piece.validMoves)
+        {
+            Square square = GetSquare(move);
+            square.Highlighted = true;
+            square.ChangeColor(Color.red);
+            //remove square piece collider
+            if (square.isOccupied)
+            {
+                square.piece.GetComponent<Collider>().enabled = false;
+            }
+        }
     }
 
-    public void RemoveHighlights()
+    public void RemoveHighlights(Piece piece)
     {
+        //Every highlighted square
         foreach (Square square in squares)
         {
             if (square.Highlighted)
             {
                 square.Highlighted = false;
-                GameObject squareObject = GameObject.Find("Square " + square.position[0] + ", " + square.position[1]);
-                if (square.color == "White")
+                square.ChangeColor(square.isBlack ? new Color(0.8f, 0.8f, 0.8f) : new Color(0.2f, 0.2f, 0.2f));
+                //add square piece collider
+                if (square.isOccupied)
                 {
-                    squareObject.GetComponent<Renderer>().material.color = new Color(0.8f, 0.8f, 0.8f);
-                }
-                else
-                {
-                    squareObject.GetComponent<Renderer>().material.color = new Color(0.2f, 0.2f, 0.2f);
+                    square.piece.GetComponent<Collider>().enabled = true;
                 }
             }
         }
