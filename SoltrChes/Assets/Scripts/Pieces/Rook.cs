@@ -4,10 +4,6 @@ using UnityEngine;
 
 public class Rook : Piece
 {
-    void Start()
-    {
-        GetMoveDirections();
-    }
     public override Vector2Int[] GetMoveDirections()
     {
         Vector2Int[] directions = new Vector2Int[]

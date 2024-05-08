@@ -8,6 +8,7 @@ public class PieceController : MonoBehaviour
     public float boostedMovementSpeed = 10f;
     public float rotationSpeed = 2f;
     private Piece selectedPiece;
+    private Piece clickedPiece;
     private Vector3 initialPosition;
 
     void Update()
@@ -24,12 +25,28 @@ public class PieceController : MonoBehaviour
                 {
                     // Set the selected piece and its initial position
                     selectedPiece = piece;
+                    clickedPiece = piece;
                     initialPosition = selectedPiece.transform.position;
 
                     // Highlight the valid moves of the piece
                     selectedPiece.GetValidMoves();
-                    selectedPiece.HighlightValidMoves();
+                    LevelManager.Instance.HighlightSquares(selectedPiece);
                 }
+            }
+
+            //If ray hits a highlighted square, move piece to that square
+            if (Physics.Raycast(ray, out hit))
+            {
+                Square square = hit.collider.GetComponent<Square>();
+                if (square && square.Highlighted && clickedPiece)
+                {
+                    clickedPiece.Move(square);
+                }
+            } else
+            {
+                // Remove highlights if clicked outside the board
+                LevelManager.Instance.RemoveHighlights(clickedPiece);
+                clickedPiece = null;
             }
         }
 
@@ -62,7 +79,7 @@ public class PieceController : MonoBehaviour
                 if (selectedPiece.IsValidMove(targetPos))
                 {
                     // Move the piece to the new position
-                    selectedPiece.Move(targetPos);
+                    selectedPiece.Move(LevelManager.Instance.GetSquare(targetPos));
                 }
                 else
                 {
@@ -81,7 +98,6 @@ public class PieceController : MonoBehaviour
         }
     }
 }
-
 
 // float currentMovementSpeed = Input.GetKey(KeyCode.LeftShift) || Input.GetKey(KeyCode.RightShift) ? boostedMovementSpeed : normalMovementSpeed;
 

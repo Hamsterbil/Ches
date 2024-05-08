@@ -4,11 +4,6 @@ using UnityEngine;
 
 public class Queen : Piece
 {
-    // Start is called before the first frame update
-    void Start()
-    {
-        GetMoveDirections();
-    }
     public override Vector2Int[] GetMoveDirections()
     {
         Vector2Int[] directions = new Vector2Int[]

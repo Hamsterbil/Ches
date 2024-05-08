@@ -4,11 +4,6 @@ using UnityEngine;
 
 public class Knight : Piece
 {
-    void Start()
-    {
-        GetMoveDirections();
-    }
-
     public override Vector2Int[] GetMoveDirections()
     {
         Vector2Int[] directions = new Vector2Int[]
