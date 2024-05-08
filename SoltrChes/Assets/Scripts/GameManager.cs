@@ -37,6 +37,11 @@ public class GameManager : MonoBehaviour
             }
             ChangeLevel(currentLevel + 1);
         }
+
+        if (Input.GetKeyDown(KeyCode.R))
+        {
+            ChangeLevel(currentLevel);
+        }
     }
 
     public void ChangeLevel(int level)
