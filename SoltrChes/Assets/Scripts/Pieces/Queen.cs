@@ -23,27 +23,14 @@ public class Queen : Piece
 
     public override List<Vector2Int> GetValidMoves()
     {
-        validMoves = new List<Vector2Int>();
-        Vector2Int[] directions = GetMoveDirections();
+        List<Vector2Int> validMoves = new List<Vector2Int>();
 
         foreach (Vector2Int direction in directions)
         {
             Vector2Int pos = currentPosition;
-
             while (true)
             {
                 pos += direction;
-
-                if (!IsWithinBounds(pos))
-                {
-                    break;
-                }
-
-                if (IsSquareOccupiedByEnemy(pos))
-                {
-                    validMoves.Add(pos);
-                    break;
-                }
             }
         }
         return validMoves;

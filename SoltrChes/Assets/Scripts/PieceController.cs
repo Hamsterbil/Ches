@@ -29,7 +29,7 @@ public class PieceController : MonoBehaviour
                     initialPosition = selectedPiece.transform.position;
 
                     // Highlight the valid moves of the piece
-                    selectedPiece.GetValidMoves();
+                    piece.legalMoves = LevelManager.Instance.GetLegalMoves(selectedPiece);
                     LevelManager.Instance.HighlightSquares(selectedPiece);
                 }
             }
@@ -38,7 +38,7 @@ public class PieceController : MonoBehaviour
             if (Physics.Raycast(ray, out hit))
             {
                 Square square = hit.collider.GetComponent<Square>();
-                if (square && square.Highlighted && clickedPiece)
+                if (square && square.highlighted && clickedPiece)
                 {
                     clickedPiece.Move(square);
                 }
@@ -76,7 +76,7 @@ public class PieceController : MonoBehaviour
                 Vector3 newPosition = hit.collider.transform.position;
                 newPosition.y = 0.5f;
                 Vector2Int targetPos = new Vector2Int(Mathf.RoundToInt(newPosition.x), Mathf.RoundToInt(newPosition.z));
-                if (selectedPiece.IsValidMove(targetPos))
+                if (selectedPiece.legalMoves.Contains(targetPos))
                 {
                     // Move the piece to the new position
                     selectedPiece.Move(LevelManager.Instance.GetSquare(targetPos));

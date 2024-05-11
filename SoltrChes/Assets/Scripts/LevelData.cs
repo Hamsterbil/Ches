@@ -6,6 +6,7 @@ public class LevelData
 {
     public int levelNumber;
     public string levelName;
+    public string type;
     public string difficulty;
     public BoardData board;
     public List<PieceData> pieces;

@@ -2,6 +2,7 @@
     {
         "levelNumber": 1,
         "levelName": "Level 1",
+        "type": "Solitaire",
         "difficulty": "Easy",
         "board": {
             "width": 8,
@@ -17,6 +18,7 @@
     {
         "levelNumber": 2,
         "levelName": "Level 2",
+        "type": "Solitaire",
         "difficulty": "Easy",
         "board": {
             "width": 8,
@@ -32,6 +34,7 @@
     {
         "levelNumber": 3,
         "levelName": "Level 3",
+        "type": "Solitaire",
         "difficulty": "Medium",
         "board": {
             "width": 8,
@@ -48,6 +51,7 @@
     {
         "levelNumber": 4,
         "levelName": "Level 4",
+        "type": "Solitaire",
         "difficulty": "Medium",
         "board": {
             "width": 8,
@@ -64,6 +68,7 @@
     {
         "levelNumber": 5,
         "levelName": "Level 5",
+        "type": "Solitaire",
         "difficulty": "Medium Hard",
         "board": {
             "width": 8,
@@ -81,6 +86,7 @@
     {
         "levelNumber": 6,
         "levelName": "Level 6",
+        "type": "Solitaire",
         "difficulty": "Medium Hard",
         "board": {
             "width": 8,
@@ -98,6 +104,7 @@
     {
         "levelNumber": 7,
         "levelName": "Level 7",
+        "type": "Solitaire",
         "difficulty": "Hard",
         "board": {
             "width": 8,
@@ -116,6 +123,7 @@
     {
         "levelNumber": 8,
         "levelName": "Level 8",
+        "type": "Solitaire",
         "difficulty": "Hard",
         "board": {
             "width": 8,
@@ -134,6 +142,7 @@
     {
         "levelNumber": 9,
         "levelName": "Level 9",
+        "type": "Solitaire",
         "difficulty": "Very Hard",
         "board": {
             "width": 8,
@@ -153,6 +162,7 @@
     {
         "levelNumber": 10,
         "levelName": "Level 10",
+        "type": "Solitaire",
         "difficulty": "Very Hard",
         "board": {
             "width": 8,

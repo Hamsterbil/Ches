@@ -8,6 +8,7 @@ public class Pawn : Piece
     {
         Vector2Int[] directions = new Vector2Int[]
         {
+            new Vector2Int(0, 1), // Up
             new Vector2Int(1, 1), // Up Right
             new Vector2Int(-1, 1) // Up Left
         };
@@ -17,19 +18,13 @@ public class Pawn : Piece
 
     public override List<Vector2Int> GetValidMoves()
     {
-        validMoves = new List<Vector2Int>();
-        Vector2Int[] directions = GetMoveDirections();
+        List<Vector2Int> validMoves = new List<Vector2Int>();
 
         foreach (Vector2Int direction in directions)
         {
-            Vector2Int pos = currentPosition;
-            pos += direction;
+            Vector2Int pos = currentPosition + direction;
+        }       
 
-            if (IsSquareOccupiedByEnemy(pos))
-            {
-                validMoves.Add(pos);
-            }
-        }
         return validMoves;
     }
 }

@@ -22,18 +22,12 @@ public class Knight : Piece
     }
     public override List<Vector2Int> GetValidMoves()
     {
-        validMoves = new List<Vector2Int>();
-        Vector2Int[] directions = GetMoveDirections();
-        
+        List<Vector2Int> validMoves = new List<Vector2Int>();
+
         foreach (Vector2Int direction in directions)
         {
-            Vector2Int pos = currentPosition;
-            pos += direction;
-
-            if (IsSquareOccupiedByEnemy(pos))
-            {
-                validMoves.Add(pos);
-            }
+            Vector2Int pos = currentPosition + direction;
+            
         }
         return validMoves;
     }

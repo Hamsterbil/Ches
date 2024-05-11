@@ -136,10 +136,10 @@ public class LevelManager : MonoBehaviour
     public void HighlightSquares(Piece piece)
     {
         RemoveHighlights(piece);
-        foreach (Vector2Int move in piece.validMoves)
+        foreach (Vector2Int move in piece.legalMoves)
         {
             Square square = GetSquare(move);
-            square.Highlighted = true;
+            square.highlighted = true;
             square.ChangeColor(Color.red);
             //remove square piece collider
             if (square.isOccupied)
@@ -154,10 +154,10 @@ public class LevelManager : MonoBehaviour
         //Every highlighted square
         foreach (Square square in squares)
         {
-            if (square.Highlighted)
+            if (square.highlighted)
             {
-                square.Highlighted = false;
-                square.ChangeColor(square.isBlack ? new Color(0.8f, 0.8f, 0.8f) : new Color(0.2f, 0.2f, 0.2f));
+                square.highlighted = false;
+                square.ChangeColor(square.isBlack ? new Color(0.2f, 0.2f, 0.2f) : new Color(0.8f, 0.8f, 0.8f));
                 //add square piece collider
                 if (square.isOccupied)
                 {
@@ -165,5 +165,54 @@ public class LevelManager : MonoBehaviour
                 }
             }
         }
+    }
+
+    public List<Vector2Int> GetLegalMoves(Piece piece)
+    {
+        List<Vector2Int> validMoves = piece.GetValidMoves();
+        List<Vector2Int> legalMoves = new List<Vector2Int>();
+
+        switch (levels[currentLevel - 1].type)
+        {
+            case "Classic":
+                legalMoves = validMoves;
+                break;
+            case "Solitaire":
+                foreach (Vector2Int move in validMoves)
+                {
+                    if (IsSquareOccupied(move))
+                    {
+                        legalMoves.Add(move);
+                    }
+                }
+                break;
+            default:
+                break;
+        }
+
+        return legalMoves;
+    }
+
+    public bool IsWithinBounds(Vector2Int position)
+    {
+        return position.x >= 0 && position.x < GetBoardSize()[0] && position.y >= 0 && position.y < GetBoardSize()[1];
+    }
+
+    public bool IsSquareEmpty(Vector2Int position)
+    {
+        if (IsWithinBounds(position))
+        {
+            return !GetSquare(position).isOccupied;
+        }
+        return false;
+    }
+
+    public bool IsSquareOccupied(Vector2Int position)
+    {
+        if (IsWithinBounds(position))
+        {
+            return GetSquare(position).isOccupied;
+        }
+        return false;
     }
 }
