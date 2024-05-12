@@ -14,7 +14,6 @@ public abstract class Piece : MonoBehaviour
         currentPosition = position;
         this.isWhite = isWhite;
         hasMoved = false;
-        legalMoves = new List<Vector2Int>();
     }
 
     public abstract List<Vector2Int> GetValidMoves();

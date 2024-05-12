@@ -108,14 +108,13 @@ public class LevelManager : MonoBehaviour
 
     private void CreatePiece(PieceData piece, GameObject prefab)
     {
-        // Vector3 position = new Vector3(piece.position[0], 0.5f, piece.position[1]);
-        GameObject pieceObject = Instantiate(prefab, new Vector3(0,0,0), Quaternion.identity, this.transform);
+        Vector3 position = new Vector3(piece.position[0], 0.5f, piece.position[1]);
+        GameObject pieceObject = Instantiate(prefab, position, Quaternion.identity, this.transform);
         
         Piece pieceComponent = pieceObject.GetComponent<Piece>();
-        Debug.Log(pieceComponent);
-        // pieceComponent.InitPiece(new Vector2Int(piece.position[0], piece.position[1]), true);
+        pieceComponent.InitPiece(new Vector2Int(piece.position[0], piece.position[1]), true);
         
-        // pieces.Add(pieceComponent);
+        pieces.Add(pieceComponent);
     }
 
     public void RemovePiece(Piece piece)

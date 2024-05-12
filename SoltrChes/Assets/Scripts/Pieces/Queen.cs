@@ -21,11 +21,11 @@ public class Queen : Piece
 
         foreach (Vector2Int direction in directions)
         {
-            Vector2Int pos = currentPosition;
-            while (true)
-            {
-                pos += direction;
-            }
+            Vector2Int pos = currentPosition + direction;
+            // while (true)
+            // {
+            //     pos += direction;
+            // }
         }
         return validMoves;
     }

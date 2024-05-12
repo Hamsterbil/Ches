@@ -10,6 +10,7 @@ public class Pawn : Piece
         Vector2Int[] directions = new Vector2Int[]
         {
             new Vector2Int(0, 1), // Up
+            new Vector2Int(0, 2), // Up 2
             new Vector2Int(1, 1), // Up Right
             new Vector2Int(-1, 1) // Up Left
         };

@@ -18,10 +18,10 @@ public class Rook : Piece
         foreach (Vector2Int direction in directions)
         {
             Vector2Int pos = currentPosition;
-            while (true)
-            {
-                pos += direction;
-            }
+            // while (true)
+            // {
+            //     pos += direction;
+            // }
         }
         return validMoves;
     }

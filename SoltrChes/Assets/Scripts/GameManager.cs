@@ -62,6 +62,6 @@ public class GameManager : MonoBehaviour
 
     public void CheckCompletion()
     {
-        // completionManager.CheckCompletion();
+        completionManager.CheckCompletion();
     }
 }
