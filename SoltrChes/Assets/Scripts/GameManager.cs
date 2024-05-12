@@ -6,10 +6,12 @@ public class GameManager : MonoBehaviour
 {
     public static GameManager Instance { get; private set; }
     private int currentLevel;
+    public int totalPoints;
     [SerializeField] private Timer timer;
     [SerializeField] private DisplayLevelName displayLevelName;
     [SerializeField] private GameObject menu;
     [SerializeField] private PieceController pieceController;
+    [SerializeField] private DisplayPoints displayPoints;
     public CompletionManager completionManager;
     void Awake()
     {
@@ -82,6 +84,7 @@ public class GameManager : MonoBehaviour
         LevelManager.Instance.LoadLevel(level);
         timer.ResetTimer();
         displayLevelName.DisplayLevel(currentLevel);
+        displayPoints.DisplayPoint(totalPoints);
     }
 
     public int GetCurrentLevel()
@@ -91,6 +94,6 @@ public class GameManager : MonoBehaviour
 
     public void CheckCompletion()
     {
-
+       
     }
 }

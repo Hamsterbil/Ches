@@ -19,4 +19,14 @@ public class MainMenu : MonoBehaviour
         SceneManager.LoadScene(0);  
     }
 
+    public void OnRestartButton()
+    {
+        GameManager.Instance.ChangeLevel(GameManager.Instance.GetCurrentLevel());
+    }
+
+    public void OnNextLevelButton()
+    {
+        GameManager.Instance.ChangeLevel(GameManager.Instance.GetCurrentLevel() + 1); 
+    }
+
 }
