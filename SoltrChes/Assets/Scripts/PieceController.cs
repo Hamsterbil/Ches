@@ -10,29 +10,32 @@ public class PieceController : MonoBehaviour
     private Piece selectedPiece;
     private Piece clickedPiece;
     private Vector3 initialPosition;
+    public bool checkInputs;
 
     void Update()
     {
-        // Check if the player has clicked the left mouse button
-        if (Input.GetMouseButtonDown(0))
+        if (checkInputs)
         {
-            Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
-            RaycastHit hit;
-            if (Physics.Raycast(ray, out hit))
+
+            // Check if the player has clicked the left mouse button
+            if (Input.GetMouseButtonDown(0))
             {
-                Piece piece = hit.collider.GetComponent<Piece>();
-                if (piece != null)
+                Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+                RaycastHit hit;
+                if (Physics.Raycast(ray, out hit))
                 {
-                    // Set the selected piece and its initial position
-                    selectedPiece = piece;
-                    clickedPiece = piece;
-                    initialPosition = selectedPiece.transform.position;
+                    Piece piece = hit.collider.GetComponent<Piece>();
+                    if (piece != null)
+                    {
+                        // Set the selected piece and its initial position
+                        selectedPiece = piece;
+                        clickedPiece = piece;
+                        initialPosition = selectedPiece.transform.position;
 
                     // Highlight the valid moves of the piece
                     piece.legalMoves = LevelManager.Instance.GetLegalMoves(selectedPiece);
                     LevelManager.Instance.HighlightSquares(selectedPiece);
                 }
-            }
 
             //If ray hits a highlighted square, move piece to that square
             if (Physics.Raycast(ray, out hit))
@@ -40,37 +43,36 @@ public class PieceController : MonoBehaviour
                 Square square = hit.collider.GetComponent<Square>();
                 if (square && square.highlighted && clickedPiece)
                 {
-                    clickedPiece.Move(square);
+                    Square square = hit.collider.GetComponent<Square>();
+                    if (square && square.Highlighted && clickedPiece)
+                    {
+                        clickedPiece.Move(square);
+                    }
                 }
-            } else
-            {
-                // Remove highlights if clicked outside the board
-                LevelManager.Instance.RemoveHighlights(clickedPiece);
-                clickedPiece = null;
+                else
+                {
+                    // Remove highlights if clicked outside the board
+                    LevelManager.Instance.RemoveHighlights(clickedPiece);
+                    clickedPiece = null;
+                }
             }
-        }
 
-        // Check if the left mouse button is being held down
-        if (Input.GetMouseButton(0) && selectedPiece != null)
-        {
-            Plane plane = new Plane(Vector3.up, initialPosition);
-            Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
-            float distance;
-            if (plane.Raycast(ray, out distance))
+            // Check if the left mouse button is being held down
+            if (Input.GetMouseButton(0) && selectedPiece != null)
             {
-                Vector3 newPosition = ray.GetPoint(distance);
-                newPosition.y = 1f;
-                selectedPiece.transform.position = newPosition;
+                Plane plane = new Plane(Vector3.up, initialPosition);
+                Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+                float distance;
+                if (plane.Raycast(ray, out distance))
+                {
+                    Vector3 newPosition = ray.GetPoint(distance);
+                    newPosition.y = 1f;
+                    selectedPiece.transform.position = newPosition;
+                }
             }
-        }
 
-        // Check if the left mouse button is released
-        if (Input.GetMouseButtonUp(0) && selectedPiece != null)
-        {
-            // Check if the mouse is released over a valid move
-            Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
-            RaycastHit hit;
-            if (Physics.Raycast(ray, out hit))
+            // Check if the left mouse button is released
+            if (Input.GetMouseButtonUp(0) && selectedPiece != null)
             {
                 //Round the position to the nearest integer, check if valid move
                 Vector3 newPosition = hit.collider.transform.position;
@@ -78,23 +80,30 @@ public class PieceController : MonoBehaviour
                 Vector2Int targetPos = new Vector2Int(Mathf.RoundToInt(newPosition.x), Mathf.RoundToInt(newPosition.z));
                 if (selectedPiece.legalMoves.Contains(targetPos))
                 {
-                    // Move the piece to the new position
-                    selectedPiece.Move(LevelManager.Instance.GetSquare(targetPos));
+                    //Round the position to the nearest integer, check if valid move
+                    Vector3 newPosition = hit.collider.transform.position;
+                    newPosition.y = 0.5f;
+                    Vector2Int targetPos = new Vector2Int(Mathf.RoundToInt(newPosition.x), Mathf.RoundToInt(newPosition.z));
+                    if (selectedPiece.IsValidMove(targetPos))
+                    {
+                        // Move the piece to the new position
+                        selectedPiece.Move(LevelManager.Instance.GetSquare(targetPos));
+                    }
+                    else
+                    {
+                        // Return the piece to its initial position if the move is invalid
+                        selectedPiece.transform.position = initialPosition;
+                    }
                 }
                 else
                 {
-                    // Return the piece to its initial position if the move is invalid
+                    // Return the piece to its initial position if the mouse is released outside the board
                     selectedPiece.transform.position = initialPosition;
                 }
-            }
-            else
-            {
-                // Return the piece to its initial position if the mouse is released outside the board
-                selectedPiece.transform.position = initialPosition;
-            }
 
-            // Reset selected piece
-            selectedPiece = null;
+                // Reset selected piece
+                selectedPiece = null;
+            }
         }
     }
 }

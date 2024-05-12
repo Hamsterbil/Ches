@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class CompletionManager : MonoBehaviour
 {
+    [SerializeField] private GameObject winmenu;
+    [SerializeField] private GameObject losemenu;
     public void CheckCompletion()
     {
         //Based on level type, check if the level is completed
@@ -43,11 +45,15 @@ public class CompletionManager : MonoBehaviour
     {
         GameManager.Instance.ChangeLevel(GameManager.Instance.GetCurrentLevel() + 1);
         GameManager.Instance.totalPoints += 50 * GameManager.Instance.multiplier;
+        AudioManager.Instance.PlaySound("win");
+        winmenu.SetActive(true);
     }
 
     public void LoseGame()
     {
         GameManager.Instance.ChangeLevel(GameManager.Instance.GetCurrentLevel());
         GameManager.Instance.multiplier = Mathf.Max(0, GameManager.Instance.multiplier - 1);
+        AudioManager.Instance.PlaySound("lose");
+        losemenu.SetActive(true);
     }
 }
