@@ -4,8 +4,9 @@ using UnityEngine;
 
 public class Knight : Piece
 {
-    public override Vector2Int[] GetMoveDirections()
+    public override List<Vector2Int> GetValidMoves()
     {
+        List<Vector2Int> validMoves = new List<Vector2Int>();
         Vector2Int[] directions = new Vector2Int[]
         {
             new Vector2Int(1, 2), // Up Right
@@ -18,16 +19,13 @@ public class Knight : Piece
             new Vector2Int(-2, -1) // Left Down
         };
 
-        return directions;
-    }
-    public override List<Vector2Int> GetValidMoves()
-    {
-        List<Vector2Int> validMoves = new List<Vector2Int>();
-
         foreach (Vector2Int direction in directions)
         {
             Vector2Int pos = currentPosition + direction;
-            
+            if (LevelManager.Instance.IsWithinBounds(pos))
+            {
+                validMoves.Add(pos);
+            }
         }
         return validMoves;
     }

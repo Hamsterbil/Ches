@@ -4,8 +4,9 @@ using UnityEngine;
 
 public class Queen : Piece
 {
-    public override Vector2Int[] GetMoveDirections()
+    public override List<Vector2Int> GetValidMoves()
     {
+        List<Vector2Int> validMoves = new List<Vector2Int>();
         Vector2Int[] directions = new Vector2Int[]
         {
             new Vector2Int(1, 0), // Right
@@ -17,13 +18,6 @@ public class Queen : Piece
             new Vector2Int(1, -1), // Down Right
             new Vector2Int(-1, -1) // Down Left
         };
-
-        return directions;
-    }
-
-    public override List<Vector2Int> GetValidMoves()
-    {
-        List<Vector2Int> validMoves = new List<Vector2Int>();
 
         foreach (Vector2Int direction in directions)
         {

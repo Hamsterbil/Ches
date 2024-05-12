@@ -4,8 +4,9 @@ using UnityEngine;
 
 public class Pawn : Piece
 {
-    public override Vector2Int[] GetMoveDirections()
+    public override List<Vector2Int> GetValidMoves()
     {
+        List<Vector2Int> validMoves = new List<Vector2Int>();
         Vector2Int[] directions = new Vector2Int[]
         {
             new Vector2Int(0, 1), // Up
@@ -13,17 +14,10 @@ public class Pawn : Piece
             new Vector2Int(-1, 1) // Up Left
         };
 
-        return directions;
-    }
-
-    public override List<Vector2Int> GetValidMoves()
-    {
-        List<Vector2Int> validMoves = new List<Vector2Int>();
-
         foreach (Vector2Int direction in directions)
         {
             Vector2Int pos = currentPosition + direction;
-        }       
+        }
 
         return validMoves;
     }

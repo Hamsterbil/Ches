@@ -6,6 +6,9 @@ public class GameManager : MonoBehaviour
 {
     public static GameManager Instance { get; private set; }
     private int currentLevel;
+    public CompletionManager completionManager;
+    public int totalPoints;
+    public int multiplier;
 
     void Awake()
     {
@@ -47,6 +50,7 @@ public class GameManager : MonoBehaviour
     public void ChangeLevel(int level)
     {
         Debug.Log("Changing level to " + level);
+        multiplier = 5;
         currentLevel = level;
         LevelManager.Instance.LoadLevel(level);
     }
@@ -58,6 +62,6 @@ public class GameManager : MonoBehaviour
 
     public void CheckCompletion()
     {
-
+        // completionManager.CheckCompletion();
     }
 }

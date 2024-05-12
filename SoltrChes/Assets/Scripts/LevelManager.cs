@@ -2,14 +2,14 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using Newtonsoft.Json;
-
 public class LevelManager : MonoBehaviour
 {
     public static LevelManager Instance { get; private set; }
     private int currentLevel;
     private LevelData[] levels;
+    private LevelData levelData;
     private BoardData board;
-    private PieceData[] pieces;
+    public List<Piece> pieces;
     private Square[] squares;
     public GameObject squarePrefab;
     public GameObject[] piecePrefabs;
@@ -38,9 +38,9 @@ public class LevelManager : MonoBehaviour
     {
         DeleteLevel();
         currentLevel = level;
-        LevelData levelData = levels[currentLevel - 1];
+        levelData = levels[currentLevel - 1];
         board = levelData.board;
-        pieces = levelData.pieces.ToArray();
+        pieces = new List<Piece>();
 
         CreateBoard(board.width, board.height);
         SetPieces();
@@ -75,7 +75,7 @@ public class LevelManager : MonoBehaviour
 
     private void SetPieces()
     {
-        foreach (PieceData piece in pieces)
+        foreach (PieceData piece in levelData.pieces)
         {
             switch (piece.type)
             {
@@ -99,38 +99,59 @@ public class LevelManager : MonoBehaviour
                     break;
             }
         }
+        //Get all legal moves
+        foreach (Piece piece in pieces)
+        {
+            piece.legalMoves = GetLegalMoves(piece);
+        }
     }
 
     private void CreatePiece(PieceData piece, GameObject prefab)
     {
-        Vector2Int position = new Vector2Int(piece.position[0], piece.position[1]);
-        GameObject pieceObject = Instantiate(prefab, new Vector3(position.x, 0.5f, position.y), Quaternion.identity, this.transform);
+        // Vector3 position = new Vector3(piece.position[0], 0.5f, piece.position[1]);
+        GameObject pieceObject = Instantiate(prefab, new Vector3(0,0,0), Quaternion.identity, this.transform);
+        
         Piece pieceComponent = pieceObject.GetComponent<Piece>();
-        pieceComponent.InitPiece(position, (piece.position[0] + piece.position[1]) % 2 == 0);
+        Debug.Log(pieceComponent);
+        // pieceComponent.InitPiece(new Vector2Int(piece.position[0], piece.position[1]), true);
+        
+        // pieces.Add(pieceComponent);
+    }
 
-        Square square = GetSquare(position);
-        square.isOccupied = true;
-        square.piece = pieceComponent;
+    public void RemovePiece(Piece piece)
+    {
+        Square square = GetSquare(piece.currentPosition);
+        square.isOccupied = false;
+        Destroy(piece.gameObject);
     }
 
     public int[] GetBoardSize()
     {
         return new int[] { board.width, board.height };
     }
-
-    public string GetLevelName()
-    {
-        return levels[currentLevel - 1].levelName;
-    }
-
     public LevelData[] GetLevels()
     {
         return levels;
     }
 
+    public string levelName()
+    {
+        return levels[currentLevel - 1].levelName;
+    }
+
+    public string levelType()
+    {
+        return levels[currentLevel - 1].type;
+    }
+
     public Square GetSquare(Vector2Int position)
     {
         return squares[position.x * board.height + position.y];
+    }
+
+    public List<Piece> GetPieces()
+    {
+        return pieces;
     }
 
     public void HighlightSquares(Piece piece)
