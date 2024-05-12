@@ -6,7 +6,11 @@ public class GameManager : MonoBehaviour
 {
     public static GameManager Instance { get; private set; }
     private int currentLevel;
-
+    [SerializeField] private Timer timer;
+    [SerializeField] private DisplayLevelName displayLevelName;
+    [SerializeField] private GameObject menu;
+    [SerializeField] private PieceController pieceController;
+    public CompletionManager completionManager;
     void Awake()
     {
         if (Instance == null)
@@ -23,6 +27,7 @@ public class GameManager : MonoBehaviour
     {
         ChangeLevel(1);
     }
+
 
     void Update()
     {
@@ -42,6 +47,32 @@ public class GameManager : MonoBehaviour
         {
             ChangeLevel(currentLevel);
         }
+
+        if (Input.GetKeyDown(KeyCode.Escape))
+        {
+            if (menu.activeSelf)
+
+            {
+                pieceController.checkInputs = true;
+                menu.SetActive(false);
+                timer.ResumeTimer();
+            }
+            else
+            {
+                pieceController.checkInputs = false;
+                menu.SetActive(true);
+                timer.PauseTimer();
+            }
+        }
+        if (Input.GetKeyDown(KeyCode.W))
+        {
+            completionManager.WinGame();
+        }
+        if (Input.GetKeyDown(KeyCode.L))
+        {
+            completionManager.LoseGame();
+        }
+
     }
 
     public void ChangeLevel(int level)
@@ -49,6 +80,8 @@ public class GameManager : MonoBehaviour
         Debug.Log("Changing level to " + level);
         currentLevel = level;
         LevelManager.Instance.LoadLevel(level);
+        timer.ResetTimer();
+        displayLevelName.DisplayLevel(currentLevel);
     }
 
     public int GetCurrentLevel()
