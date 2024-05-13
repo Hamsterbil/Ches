@@ -24,11 +24,21 @@ public class Pawn : Piece
                 break;
             }
 
+            if (direction == directions[2] || direction == directions[3])
+            {
+                if (LevelManager.Instance.IsSquareOccupied(pos))
+                {
+                    break;
+                }
+            }
+
             if (direction == directions[3] && hasMoved == false)
             {
                 validMoves.Add(pos);
                 break;
             }
+
+            validMoves.Add(pos);
         }
         return validMoves;
     }
