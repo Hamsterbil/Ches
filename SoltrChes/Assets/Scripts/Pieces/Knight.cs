@@ -23,12 +23,10 @@ public class Knight : Piece
         {
             Vector2Int pos = currentPosition + direction;
 
-            if (!LevelManager.Instance.IsWithinBounds(pos))
+            if (LevelManager.Instance.IsWithinBounds(pos))
             {
-                break;
+                validMoves.Add(pos);
             }
-
-            validMoves.Add(pos);
         }
 
         return validMoves;
