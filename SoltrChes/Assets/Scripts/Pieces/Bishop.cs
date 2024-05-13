@@ -4,8 +4,9 @@ using UnityEngine;
 
 public class Bishop : Piece
 {
-    public override Vector2Int[] GetMoveDirections()
+    public override List<Vector2Int> GetValidMoves()
     {
+        List<Vector2Int> validMoves = new List<Vector2Int>();
         Vector2Int[] directions = new Vector2Int[]
         {
             new Vector2Int(1, 1), // Up Right
@@ -14,32 +15,22 @@ public class Bishop : Piece
             new Vector2Int(-1, -1) // Down Left
         };
 
-        return directions;
-    }
-
-    public override List<Vector2Int> GetValidMoves()
-    {
-        validMoves = new List<Vector2Int>();
-        Vector2Int[] directions = GetMoveDirections();
-
         foreach (Vector2Int direction in directions)
         {
             Vector2Int pos = currentPosition;
-
             while (true)
             {
                 pos += direction;
-
-                if (!IsWithinBounds(pos))
+                if (!LevelManager.Instance.IsWithinBounds(pos))
                 {
                     break;
                 }
-
-                if (IsSquareOccupiedByEnemy(pos))
+                if (LevelManager.Instance.IsSquareOccupied(pos))
                 {
                     validMoves.Add(pos);
                     break;
                 }
+                validMoves.Add(pos);
             }
         }
         return validMoves;
