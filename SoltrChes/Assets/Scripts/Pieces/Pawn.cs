@@ -9,37 +9,27 @@ public class Pawn : Piece
         List<Vector2Int> validMoves = new List<Vector2Int>();
         Vector2Int[] directions = new Vector2Int[]
         {
-            new Vector2Int(0, 1), // Up
-            new Vector2Int(0, 2), // Up 2
             new Vector2Int(1, 1), // Up Right
-            new Vector2Int(-1, 1) // Up Left
+            new Vector2Int(-1, 1), // Up Left
+            new Vector2Int(0,1), // up
+            new Vector2Int(0,2) // up 2
         };
 
         foreach (Vector2Int direction in directions)
         {
             Vector2Int pos = currentPosition + direction;
+
             if (!LevelManager.Instance.IsWithinBounds(pos))
             {
                 break;
             }
 
-            if (direction == directions[0] || direction == directions[1])
+            if (direction == directions[3] && hasMoved == false)
             {
-                if (LevelManager.Instance.IsSquareOccupied(pos))
-                {
-                    break;
-                }
-
-                if (direction == directions[1] && hasMoved)
-                {
-                    break;
-                }
+                validMoves.Add(pos);
+                break;
             }
-            
-            Debug.Log("Pawn: " + pos);
-            validMoves.Add(pos);
         }
-
         return validMoves;
     }
 }

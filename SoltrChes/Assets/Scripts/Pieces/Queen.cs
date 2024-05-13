@@ -34,6 +34,7 @@ public class Queen : Piece
                     validMoves.Add(pos);
                     break;
                 }
+                
                 validMoves.Add(pos);
             }
         }

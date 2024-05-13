@@ -22,10 +22,13 @@ public class King : Piece
         foreach (Vector2Int direction in directions)
         {
             Vector2Int pos = currentPosition + direction;
-            if (LevelManager.Instance.IsWithinBounds(pos))
+
+            if (!LevelManager.Instance.IsWithinBounds(pos))
             {
-                validMoves.Add(pos);
+                break;
             }
+
+            validMoves.Add(pos);
         }
         return validMoves;
     }
