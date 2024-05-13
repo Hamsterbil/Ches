@@ -15,7 +15,7 @@ public class PieceController : MonoBehaviour
         //move camera to look at the middle of board from the top at a 45 degree angle
         int boardx = LevelManager.Instance.GetBoardSize()[0];
         int boardz = LevelManager.Instance.GetBoardSize()[1];
-        Camera.main.transform.position = new Vector3(boardx / 2.2f, 13, -boardz / 2.5f);
+        Camera.main.transform.position = new Vector3(boardx / 2.2f, 8, -boardz / 8.5f);
         Camera.main.transform.rotation = Quaternion.Euler(65, 0, 0);
     }
 
@@ -116,7 +116,6 @@ public class PieceController : MonoBehaviour
                     //Round the position to the nearest integer, check if valid move
                     Vector3 newPosition = hit.collider.transform.position;
                     Vector2Int targetPos = new Vector2Int(Mathf.FloorToInt(newPosition.x), Mathf.FloorToInt(newPosition.z));
-                    Debug.Log(targetPos);
                     if (selectedPiece.legalMoves.Contains(targetPos))
                     {
                         // Move the piece to the new position

@@ -13,12 +13,7 @@ public class LevelSelectGenerator : MonoBehaviour
     {
         if (levelButtonContainer.childCount == 0)
         {
-
-            string jsonPath = Application.dataPath + "/Scripts/JSON/Levels.json";
-            string json = System.IO.File.ReadAllText(jsonPath);
-            LevelData[] levels = JsonConvert.DeserializeObject<LevelData[]>(json);
-
-            foreach (LevelData level in levels)
+            foreach (LevelData level in LevelManager.Instance.GetLevels())
             {
                 Debug.Log(level.levelName);
                 GameObject levelButton = Instantiate(levelButtonPrefab, levelButtonContainer);

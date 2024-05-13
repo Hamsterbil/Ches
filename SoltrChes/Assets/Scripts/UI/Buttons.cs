@@ -7,7 +7,7 @@ public class MainMenu : MonoBehaviour
 {
     public void OnPlayButton()
     {
-        GameManager.Instance.StartGame(1);
+        GameManager.Instance.StartGame(GameManager.Instance.GetCurrentLevel());
     }
 
     public void OnQuitButton()
@@ -29,9 +29,7 @@ public class MainMenu : MonoBehaviour
     {
         if (LevelManager.Instance.IsLastLevel())
         {
-            //Jeppe kode her til hvad der skal ske efter sidste level:
-
-            return;
+            SceneManager.LoadScene(0);
         }
         GameManager.Instance.ChangeLevel(GameManager.Instance.GetCurrentLevel() + 1);
     }

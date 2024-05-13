@@ -19,11 +19,14 @@ public class GameManager : MonoBehaviour
     {
         if (Instance != null && Instance != this)
         {
+            SceneManager.sceneLoaded -= OnSceneLoaded;
             Destroy(gameObject);
             return;
         }
 
         Instance = this;
+        currentLevel = 1;
+        multiplier = 5;
         DontDestroyOnLoad(gameObject);
     }
 
@@ -61,25 +64,9 @@ public class GameManager : MonoBehaviour
 
     void Update()
     {
-        // if (Input.GetKeyDown(KeyCode.Space))
-        // {
-        //     if (currentLevel == LevelManager.Instance.GetLevels().Length)
-        //     {
-        //         ChangeLevel(1);
-        //         return;
-        //     }
-        //     ChangeLevel(currentLevel + 1);
-        // }
-
-        // if (Input.GetKeyDown(KeyCode.R))
-        // {
-        //     ChangeLevel(currentLevel);
-        // }
-
-        if (Input.GetKeyDown(KeyCode.Escape))
+        if (menu && Input.GetKeyDown(KeyCode.Escape))
         {
             if (menu.activeSelf)
-
             {
                 pieceController.checkInputs = true;
                 menu.SetActive(false);
