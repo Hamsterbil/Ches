@@ -7,7 +7,7 @@ public class MainMenu : MonoBehaviour
 {
     public void OnPlayButton()
     {
-        SceneManager.LoadScene(1);  
+        GameManager.Instance.StartGame(1);
     }
 
     public void OnQuitButton()
@@ -16,7 +16,8 @@ public class MainMenu : MonoBehaviour
     }
     public void OnMainMenuButton()
     {
-        SceneManager.LoadScene(0);  
+        SceneManager.LoadScene(0);
+        LevelManager.Instance.RemoveBoard();
     }
 
     public void OnRestartButton()

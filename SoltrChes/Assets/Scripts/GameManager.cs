@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class GameManager : MonoBehaviour
 {
@@ -13,22 +14,44 @@ public class GameManager : MonoBehaviour
     [SerializeField] private GameObject menu;
     [SerializeField] private PieceController pieceController;
     [SerializeField] private DisplayPoints displayPoints;
-    public CompletionManager completionManager;
+    [SerializeField] private CompletionManager completionManager;
     void Awake()
     {
-        if (Instance == null)
-        {
-            Instance = this;
-        }
-        else
+        if (Instance != null && Instance != this)
         {
             Destroy(gameObject);
+            return;
+        }
+
+        Instance = this;
+        DontDestroyOnLoad(gameObject);
+    }
+
+    public void StartGame(int levelNumber)
+    {
+        currentLevel = levelNumber;
+        SceneManager.sceneLoaded += OnSceneLoaded;
+        SceneManager.LoadScene(1);
+    }
+    private void OnSceneLoaded(Scene scene, LoadSceneMode mode)
+    {
+        if (scene.buildIndex == 1)
+        {
+            InitializeFields();
+            ChangeLevel(currentLevel);
         }
     }
 
-    void Start()
+    private void InitializeFields()
     {
-        ChangeLevel(1);
+        timer = FindObjectOfType<Timer>();
+        completionManager = FindObjectOfType<CompletionManager>();
+        menu = GameObject.Find("EscapeMenu");
+        menu.SetActive(false);
+        pieceController = FindObjectOfType<PieceController>();
+        displayLevelName = FindObjectOfType<DisplayLevelName>();
+        displayPoints = FindObjectOfType<DisplayPoints>();
+        completionManager = FindObjectOfType<CompletionManager>();
     }
 
     void Update()

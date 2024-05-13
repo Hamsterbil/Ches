@@ -16,14 +16,14 @@ public class LevelManager : MonoBehaviour
 
     void Awake()
     {
-        if (Instance == null)
-        {
-            Instance = this;
-        }
-        else
+        if (Instance != null && Instance != this)
         {
             Destroy(gameObject);
+            return;
         }
+
+        Instance = this;
+        DontDestroyOnLoad(gameObject);
         LoadJSON();
     }
 
@@ -74,6 +74,14 @@ public class LevelManager : MonoBehaviour
 
                 squares[x * height + z] = squareComponent;
             }
+        }
+    }
+
+    public void RemoveBoard()
+    {
+        foreach (Transform child in this.transform)
+        {
+            Destroy(child.gameObject);
         }
     }
 
@@ -191,7 +199,7 @@ public class LevelManager : MonoBehaviour
                     break;
                 case "Solitaire":
                     foreach (Vector2Int move in validMoves)
-                    {                        
+                    {
                         if (IsSquareOccupied(move))
                         {
                             legalMoves.Add(move);
