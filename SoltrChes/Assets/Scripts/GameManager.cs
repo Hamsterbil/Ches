@@ -40,12 +40,17 @@ public class GameManager : MonoBehaviour
             InitializeFields();
             ChangeLevel(currentLevel);
         }
+
+        Instance = this;
+        DontDestroyOnLoad(gameObject);
     }
 
     private void InitializeFields()
     {
         timer = FindObjectOfType<Timer>();
         completionManager = FindObjectOfType<CompletionManager>();
+        //Sorry men kan ikke få det til at virke på nogen anden måde, alligevel virker det, så vi kører med det
+        GameObject.Find("EscapeMenu").SetActive(true);
         menu = GameObject.Find("EscapeMenu");
         menu.SetActive(false);
         pieceController = FindObjectOfType<PieceController>();
