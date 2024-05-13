@@ -29,9 +29,11 @@ public class Rook : Piece
         foreach (Vector2Int direction in directions)
         {
             Vector2Int pos = currentPosition;
-            while (true)
-            {
+        
+        while (true)
+        {
                 pos += direction;
+
                 if (!IsWithinBounds(pos))
                 {
                     break;
@@ -42,7 +44,8 @@ public class Rook : Piece
                     validMoves.Add(pos);
                     break;
                 }
-            }
+                validMoves.Add(pos);
+        }
         }
         return validMoves;
     }

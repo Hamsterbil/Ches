@@ -45,6 +45,7 @@ public class Bishop : Piece
                     validMoves.Add(pos);
                     break;
                 }
+                validMoves.Add(pos);
             }
         }
         return validMoves;

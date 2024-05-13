@@ -35,11 +35,20 @@ public class Knight : Piece
             Vector2Int pos = currentPosition;
             pos += direction;
 
+            if (!IsWithinBounds(pos))
+            {
+                break;
+            }
+
             if (IsSquareOccupiedByEnemy(pos))
             {
                 validMoves.Add(pos);
+                break;
             }
+
+            validMoves.Add(pos);
         }
-        return validMoves;
     }
+    return validMoves;
 }
+
