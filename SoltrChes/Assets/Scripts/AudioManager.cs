@@ -20,7 +20,7 @@ public class AudioManager : MonoBehaviour
     }
     public void PlaySound(string type)
     {
-        switch(type)
+        switch (type)
         {
             case "win":
                 audioSource.clip = audioClips[0];
@@ -38,7 +38,9 @@ public class AudioManager : MonoBehaviour
                 audioSource.clip = audioClips[4];
                 break;
         }
-        audioSource.Play();
+        if (!audioSource.isPlaying)
+        {
+            audioSource.Play();
+        }
     }
-
 }

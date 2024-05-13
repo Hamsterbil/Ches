@@ -31,18 +31,17 @@ public class GameManager : MonoBehaviour
         ChangeLevel(1);
     }
 
-
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.Space))
-        {
-            if (currentLevel == LevelManager.Instance.GetLevels().Length)
-            {
-                ChangeLevel(1);
-                return;
-            }
-            ChangeLevel(currentLevel + 1);
-        }
+        // if (Input.GetKeyDown(KeyCode.Space))
+        // {
+        //     if (currentLevel == LevelManager.Instance.GetLevels().Length)
+        //     {
+        //         ChangeLevel(1);
+        //         return;
+        //     }
+        //     ChangeLevel(currentLevel + 1);
+        // }
 
         // if (Input.GetKeyDown(KeyCode.R))
         // {

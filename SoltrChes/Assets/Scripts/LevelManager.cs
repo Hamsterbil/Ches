@@ -110,7 +110,7 @@ public class LevelManager : MonoBehaviour
     private void CreatePiece(PieceData piece, GameObject prefab)
     {
         Vector3 position = new Vector3(piece.position[0], 0.5f, piece.position[1]);
-        GameObject pieceObject = Instantiate(prefab, position, piece.type == "Knight" ? Quaternion.Euler(0, 90, 0) : Quaternion.identity, this.transform);
+        GameObject pieceObject = Instantiate(prefab, position, Quaternion.identity, this.transform);
 
         Piece pieceComponent = pieceObject.GetComponent<Piece>();
         pieceComponent.InitPiece(new Vector2Int(piece.position[0], piece.position[1]), true);
@@ -191,7 +191,7 @@ public class LevelManager : MonoBehaviour
                     break;
                 case "Solitaire":
                     foreach (Vector2Int move in validMoves)
-                    {
+                    {                        
                         if (IsSquareOccupied(move))
                         {
                             legalMoves.Add(move);

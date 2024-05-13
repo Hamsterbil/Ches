@@ -18,7 +18,26 @@ public class Pawn : Piece
         foreach (Vector2Int direction in directions)
         {
             Vector2Int pos = currentPosition + direction;
+            if (!LevelManager.Instance.IsWithinBounds(pos))
+            {
+                break;
+            }
+
+            if (direction == directions[0] || direction == directions[1])
+            {
+                if (LevelManager.Instance.IsSquareOccupied(pos))
+                {
+                    break;
+                }
+
+                if (direction == directions[1] && hasMoved)
+                {
+                    break;
+                }
+            }
             
+            Debug.Log("Pawn: " + pos);
+            validMoves.Add(pos);
         }
 
         return validMoves;

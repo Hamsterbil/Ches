@@ -10,5 +10,4 @@ public class DisplayLevelName : MonoBehaviour
     {
         _levelNameText.text = LevelManager.Instance.GetLevels()[level - 1].levelName;
     }
-
 }
