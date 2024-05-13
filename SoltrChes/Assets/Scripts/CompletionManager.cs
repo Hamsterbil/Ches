@@ -9,11 +9,11 @@ public class CompletionManager : MonoBehaviour
     public void CheckCompletion()
     {
         //Based on level type, check if the level is completed
-        switch (LevelManager.Instance.levelType())
+        switch (LevelManager.Instance.GetCurrentLevel().type)
         {
             case "Chess":
 
-            break;
+                break;
             case "Solitaire":
                 //If there is one piece left, win. If there are no legal moves left for every piece, lose
                 if (LevelManager.Instance.GetPieces().Count == 1)
@@ -37,22 +37,26 @@ public class CompletionManager : MonoBehaviour
                     }
                 }
 
-            break;
+                break;
         }
     }
 
     public void WinGame()
     {
-        GameManager.Instance.ChangeLevel(GameManager.Instance.GetCurrentLevel() + 1);
-        GameManager.Instance.totalPoints += 50 * GameManager.Instance.multiplier;
+        if (LevelManager.Instance.GetCurrentLevel().isCompleted == false)
+        {
+            GameManager.Instance.totalPoints += 50 * GameManager.Instance.multiplier;
+        }
+        LevelManager.Instance.GetCurrentLevel().isCompleted = true;
+        GameManager.Instance.timer.PauseTimer();
         AudioManager.Instance.PlaySound("win");
         winmenu.SetActive(true);
     }
 
     public void LoseGame()
     {
-        GameManager.Instance.ChangeLevel(GameManager.Instance.GetCurrentLevel());
         GameManager.Instance.multiplier = Mathf.Max(0, GameManager.Instance.multiplier - 1);
+        GameManager.Instance.timer.PauseTimer();
         AudioManager.Instance.PlaySound("lose");
         losemenu.SetActive(true);
     }

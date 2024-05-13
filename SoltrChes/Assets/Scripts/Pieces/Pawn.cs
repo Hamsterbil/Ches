@@ -18,6 +18,7 @@ public class Pawn : Piece
         foreach (Vector2Int direction in directions)
         {
             Vector2Int pos = currentPosition + direction;
+            
         }
 
         return validMoves;

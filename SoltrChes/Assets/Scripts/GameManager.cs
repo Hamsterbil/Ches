@@ -8,7 +8,7 @@ public class GameManager : MonoBehaviour
     private int currentLevel;
     public int multiplier;
     public int totalPoints;
-    [SerializeField] private Timer timer;
+    public Timer timer;
     [SerializeField] private DisplayLevelName displayLevelName;
     [SerializeField] private GameObject menu;
     [SerializeField] private PieceController pieceController;
@@ -34,10 +34,8 @@ public class GameManager : MonoBehaviour
 
     void Update()
     {
-        //If spacebar clicked, go to next level
         if (Input.GetKeyDown(KeyCode.Space))
         {
-            //Loop back to level 1 if current level is the last level
             if (currentLevel == LevelManager.Instance.GetLevels().Length)
             {
                 ChangeLevel(1);
@@ -46,10 +44,10 @@ public class GameManager : MonoBehaviour
             ChangeLevel(currentLevel + 1);
         }
 
-        if (Input.GetKeyDown(KeyCode.R))
-        {
-            ChangeLevel(currentLevel);
-        }
+        // if (Input.GetKeyDown(KeyCode.R))
+        // {
+        //     ChangeLevel(currentLevel);
+        // }
 
         if (Input.GetKeyDown(KeyCode.Escape))
         {
@@ -67,21 +65,15 @@ public class GameManager : MonoBehaviour
                 timer.PauseTimer();
             }
         }
-        if (Input.GetKeyDown(KeyCode.W))
-        {
-            completionManager.WinGame();
-        }
-        if (Input.GetKeyDown(KeyCode.L))
-        {
-            completionManager.LoseGame();
-        }
-
     }
 
     public void ChangeLevel(int level)
     {
         Debug.Log("Changing level to " + level);
-        multiplier = 5;
+        if (level != currentLevel)
+        {
+            multiplier = 5;
+        }
         currentLevel = level;
         LevelManager.Instance.LoadLevel(level);
         timer.ResetTimer();

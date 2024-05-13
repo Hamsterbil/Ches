@@ -26,7 +26,12 @@ public class MainMenu : MonoBehaviour
 
     public void OnNextLevelButton()
     {
-        GameManager.Instance.ChangeLevel(GameManager.Instance.GetCurrentLevel() + 1); 
-    }
+        if (LevelManager.Instance.IsLastLevel())
+        {
+            //Jeppe kode her til hvad der skal ske efter sidste level:
 
+            return;
+        }
+        GameManager.Instance.ChangeLevel(GameManager.Instance.GetCurrentLevel() + 1);
+    }
 }

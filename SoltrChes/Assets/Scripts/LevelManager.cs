@@ -32,6 +32,10 @@ public class LevelManager : MonoBehaviour
         string jsonPath = Application.dataPath + "/Scripts/JSON/Levels.json";
         string json = System.IO.File.ReadAllText(jsonPath);
         levels = JsonConvert.DeserializeObject<LevelData[]>(json);
+        foreach (LevelData level in levels)
+        {
+            level.isCompleted = false;
+        }
     }
 
     public void LoadLevel(int level)
@@ -99,28 +103,29 @@ public class LevelManager : MonoBehaviour
                     break;
             }
         }
-        //Get all legal moves
-        foreach (Piece piece in pieces)
-        {
-            piece.legalMoves = GetLegalMoves(piece);
-        }
+
+        GetLegalMoves();
     }
 
     private void CreatePiece(PieceData piece, GameObject prefab)
     {
         Vector3 position = new Vector3(piece.position[0], 0.5f, piece.position[1]);
-        GameObject pieceObject = Instantiate(prefab, position, Quaternion.identity, this.transform);
-        
+        GameObject pieceObject = Instantiate(prefab, position, piece.type == "Knight" ? Quaternion.Euler(0, 90, 0) : Quaternion.identity, this.transform);
+
         Piece pieceComponent = pieceObject.GetComponent<Piece>();
         pieceComponent.InitPiece(new Vector2Int(piece.position[0], piece.position[1]), true);
-        
+
         pieces.Add(pieceComponent);
+
+        Square pieceSquare = GetSquare(new Vector2Int(piece.position[0], piece.position[1]));
+        pieceSquare.isOccupied = true;
+        pieceSquare.piece = pieceComponent;
     }
 
     public void RemovePiece(Piece piece)
     {
         Square square = GetSquare(piece.currentPosition);
-        square.isOccupied = false;
+        pieces.Remove(piece);
         Destroy(piece.gameObject);
     }
 
@@ -133,14 +138,9 @@ public class LevelManager : MonoBehaviour
         return levels;
     }
 
-    public string levelName()
+    public LevelData GetCurrentLevel()
     {
-        return levels[currentLevel - 1].levelName;
-    }
-
-    public string levelType()
-    {
-        return levels[currentLevel - 1].type;
+        return levelData;
     }
 
     public Square GetSquare(Vector2Int position)
@@ -161,11 +161,6 @@ public class LevelManager : MonoBehaviour
             Square square = GetSquare(move);
             square.highlighted = true;
             square.ChangeColor(Color.red);
-            //remove square piece collider
-            if (square.isOccupied)
-            {
-                square.piece.GetComponent<Collider>().enabled = false;
-            }
         }
     }
 
@@ -178,39 +173,36 @@ public class LevelManager : MonoBehaviour
             {
                 square.highlighted = false;
                 square.ChangeColor(square.isBlack ? new Color(0.2f, 0.2f, 0.2f) : new Color(0.8f, 0.8f, 0.8f));
-                //add square piece collider
-                if (square.isOccupied)
-                {
-                    square.piece.GetComponent<Collider>().enabled = true;
-                }
             }
         }
     }
 
-    public List<Vector2Int> GetLegalMoves(Piece piece)
+    public void GetLegalMoves()
     {
-        List<Vector2Int> validMoves = piece.GetValidMoves();
-        List<Vector2Int> legalMoves = new List<Vector2Int>();
-
-        switch (levels[currentLevel - 1].type)
+        foreach (Piece piece in pieces)
         {
-            case "Classic":
-                legalMoves = validMoves;
-                break;
-            case "Solitaire":
-                foreach (Vector2Int move in validMoves)
-                {
-                    if (IsSquareOccupied(move))
-                    {
-                        legalMoves.Add(move);
-                    }
-                }
-                break;
-            default:
-                break;
-        }
+            List<Vector2Int> validMoves = piece.GetValidMoves();
+            List<Vector2Int> legalMoves = new List<Vector2Int>();
 
-        return legalMoves;
+            switch (levels[currentLevel - 1].type)
+            {
+                case "Classic":
+                    legalMoves = validMoves;
+                    break;
+                case "Solitaire":
+                    foreach (Vector2Int move in validMoves)
+                    {
+                        if (IsSquareOccupied(move))
+                        {
+                            legalMoves.Add(move);
+                        }
+                    }
+                    break;
+                default:
+                    break;
+            }
+            piece.legalMoves = legalMoves;
+        }
     }
 
     public bool IsWithinBounds(Vector2Int position)
@@ -220,19 +212,16 @@ public class LevelManager : MonoBehaviour
 
     public bool IsSquareEmpty(Vector2Int position)
     {
-        if (IsWithinBounds(position))
-        {
-            return !GetSquare(position).isOccupied;
-        }
-        return false;
+        return !GetSquare(position).isOccupied;
     }
 
     public bool IsSquareOccupied(Vector2Int position)
     {
-        if (IsWithinBounds(position))
-        {
-            return GetSquare(position).isOccupied;
-        }
-        return false;
+        return GetSquare(position).isOccupied;
+    }
+
+    public bool IsLastLevel()
+    {
+        return currentLevel == levels.Length;
     }
 }

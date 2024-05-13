@@ -18,11 +18,14 @@ public class King : Piece
             new Vector2Int(1, -1), // Down Right
             new Vector2Int(-1, -1) // Down Left
         };
-        
+
         foreach (Vector2Int direction in directions)
         {
             Vector2Int pos = currentPosition + direction;
-            
+            if (LevelManager.Instance.IsWithinBounds(pos))
+            {
+                validMoves.Add(pos);
+            }
         }
         return validMoves;
     }

@@ -18,10 +18,20 @@ public class Bishop : Piece
         foreach (Vector2Int direction in directions)
         {
             Vector2Int pos = currentPosition;
-            // while (true)
-            // {
-            //     pos += direction;
-            // }
+            while (true)
+            {
+                pos += direction;
+                if (!LevelManager.Instance.IsWithinBounds(pos))
+                {
+                    break;
+                }
+                if (LevelManager.Instance.IsSquareOccupied(pos))
+                {
+                    validMoves.Add(pos);
+                    break;
+                }
+                validMoves.Add(pos);
+            }
         }
         return validMoves;
     }

@@ -20,16 +20,22 @@ public abstract class Piece : MonoBehaviour
 
     public void Move(Square newSquare)
     {
+        Square currentSquare = LevelManager.Instance.GetSquare(currentPosition);
+        currentSquare.isOccupied = false;
+        currentSquare.piece = null;
+
         if (newSquare.piece && this != newSquare.piece)
         {
             LevelManager.Instance.RemovePiece(newSquare.piece);
         }
+        newSquare.isOccupied = true;
         newSquare.piece = this;
 
         Vector2Int newPosition = newSquare.position;
         currentPosition = newPosition;
         transform.position = new Vector3(newPosition.x, 0.5f, newPosition.y);
 
+        LevelManager.Instance.GetLegalMoves();
         LevelManager.Instance.RemoveHighlights(this);
         GameManager.Instance.CheckCompletion();
     }

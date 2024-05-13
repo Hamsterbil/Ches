@@ -3,10 +3,8 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class AudioManager : MonoBehaviour
-
 {
     public static AudioManager Instance { get; private set; }
-
     public List<AudioClip> audioClips;
     [SerializeField] private AudioSource audioSource;
     void Awake()
@@ -35,6 +33,9 @@ public class AudioManager : MonoBehaviour
                 break;
             case "invalidMove":
                 audioSource.clip = audioClips[3];
+                break;
+            case "hover":
+                audioSource.clip = audioClips[4];
                 break;
         }
         audioSource.Play();
