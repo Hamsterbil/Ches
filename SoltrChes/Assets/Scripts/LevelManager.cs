@@ -29,7 +29,7 @@ public class LevelManager : MonoBehaviour
 
     private void LoadJSON()
     {
-        string jsonPath = Application.dataPath + "/Scripts/JSON/Levels.json";
+        string jsonPath = Application.dataPath + "/StreamingAssets/Levels.json";
         string json = System.IO.File.ReadAllText(jsonPath);
         levels = JsonConvert.DeserializeObject<LevelData[]>(json);
         foreach (LevelData level in levels)
