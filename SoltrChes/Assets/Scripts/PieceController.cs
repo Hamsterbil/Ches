@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class PieceController : MonoBehaviour
-{    
+{
     public bool checkInputs = true;
     private Piece selectedPiece;
     private Piece clickedPiece;
@@ -21,122 +21,143 @@ public class PieceController : MonoBehaviour
 
     void Update()
     {
-        if (checkInputs)
+        if (!checkInputs) { return; }
+
+        HandlePieceSelection();
+        HandlePieceDragging();
+        HandlePiecePlacement();
+    }
+
+    private void HandlePieceSelection()
+    {
+        if (Input.GetMouseButtonDown(0))
         {
-            // Check if the player has clicked the left mouse button
-            if (Input.GetMouseButtonDown(0))
+            Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+            RaycastHit hit;
+            if (Physics.Raycast(ray, out hit))
             {
-                Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
-                RaycastHit hit;
-                if (Physics.Raycast(ray, out hit))
+                Piece piece = hit.collider.GetComponent<Piece>();
+                if (piece != null && LevelManager.Instance.GetSquare(piece.currentPosition).highlighted == false)
                 {
-                    Piece piece = hit.collider.GetComponent<Piece>();
-                    if (piece != null && LevelManager.Instance.GetSquare(piece.currentPosition).highlighted == false)
-                    {
-                        // Set the selected piece and its initial position
-                        selectedPiece = piece;
-                        clickedPiece = piece;
-                        initialPosition = selectedPiece.transform.position;
+                    selectedPiece = piece;
+                    clickedPiece = piece;
+                    initialPosition = new Vector3(selectedPiece.currentPosition.x, 0.5f, selectedPiece.currentPosition.y);
 
-                        // Highlight the valid moves of the piece
-                        LevelManager.Instance.HighlightSquares(selectedPiece);
-                    }
-
-                    Square square = hit.collider.GetComponent<Square>();
-                    if (square && square.highlighted && clickedPiece)
-                    {
-                        clickedPiece.Move(square);
-                    }
+                    LevelManager.Instance.HighlightSquares(selectedPiece);
+                }
+                else if (piece != null && LevelManager.Instance.GetSquare(piece.currentPosition).highlighted == true)
+                {
+                    clickedPiece.Move(LevelManager.Instance.GetSquare(piece.currentPosition));
                 }
                 else
                 {
-                    // Remove highlights if clicked outside the board
                     LevelManager.Instance.RemoveHighlights(clickedPiece);
                     clickedPiece = null;
                 }
-            }
 
-            // Check if the left mouse button is being held down
-            if (Input.GetMouseButton(0) && selectedPiece != null)
-            {
-                Plane plane = new Plane(Vector3.up, initialPosition);
-                //Draw plane
-                Debug.DrawLine(initialPosition, new Vector3(initialPosition.x, initialPosition.y + 1, initialPosition.z), Color.red);
-                Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
-                float distance;
-                if (plane.Raycast(ray, out distance))
+                Square square = hit.collider.GetComponent<Square>();
+                if (square && square.highlighted && clickedPiece)
                 {
-                    Vector3 newPosition = ray.GetPoint(distance);
-                    newPosition.y = 1f;
-                    selectedPiece.transform.position = newPosition;
+                    clickedPiece.Move(square);
+                }
+            }
+            else
+            {
+                // Remove highlights if clicked outside the board
+                LevelManager.Instance.RemoveHighlights(clickedPiece);
+                clickedPiece = null;
+            }
+        }
+    }
 
-                    //If raycast hits piece, trigger animation
-                    RaycastHit hit;
-                    if (Physics.Raycast(ray, out hit))
+    private void HandlePieceDragging()
+    {
+        if (Input.GetMouseButton(0) && selectedPiece != null)
+        {
+            Plane plane = new Plane(Vector3.up, initialPosition);
+            Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+            float distance;
+            if (plane.Raycast(ray, out distance))
+            {
+                Vector3 newPosition = ray.GetPoint(distance);
+                newPosition.y = 1f;
+                selectedPiece.transform.position = newPosition;
+
+                HandleHoveredPieceAnimation(ray);
+            }
+        }
+    }
+
+    private void HandleHoveredPieceAnimation(Ray ray)
+    {
+        RaycastHit hit;
+        if (Physics.Raycast(ray, out hit))
+        {
+            Piece hoveredPiece = hit.collider.GetComponent<Piece>();
+            if (hoveredPiece != null && hoveredPiece != selectedPiece)
+            {
+                hoveredPieceAnimator = hoveredPiece.GetComponent<Animator>();
+                if (hoveredPieceAnimator != null)
+                {
+                    AudioManager.Instance.PlaySound("hover");
+                    hoveredPieceAnimator.SetBool("HoveringWhileHolding", true);
+                }
+            }
+            else
+            {
+                if (hoveredPieceAnimator != null)
+                {
+                    hoveredPieceAnimator.SetBool("HoveringWhileHolding", false);
+                }
+            }
+        }
+        else
+        {
+            if (hoveredPieceAnimator != null)
+            {
+                hoveredPieceAnimator.SetBool("HoveringWhileHolding", false);
+            }
+        }
+    }
+
+    private void HandlePiecePlacement()
+    {
+        if (Input.GetMouseButtonUp(0) && selectedPiece != null)
+        {
+            Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+            RaycastHit hit;
+            if (Physics.Raycast(ray, out hit))
+            {
+                Square square = hit.collider.GetComponent<Square>();
+                Piece piece = hit.collider.GetComponent<Piece>();
+                if (square || (piece && piece != selectedPiece))
+                {
+                    Vector2Int targetPos = square ? square.position : piece.currentPosition;
+                    if (selectedPiece.legalMoves.Contains(targetPos))
                     {
-                        Piece hoveredPiece = hit.collider.GetComponent<Piece>();
-                        if (hoveredPiece != null && hoveredPiece != selectedPiece)
-                        {
-                            // Trigger animation on the hovered piece
-                            hoveredPieceAnimator = hoveredPiece.GetComponent<Animator>();
-                            if (hoveredPieceAnimator != null)
-                            {
-                                AudioManager.Instance.PlaySound("hover");
-                                hoveredPieceAnimator.SetBool("HoveringWhileHolding", true);
-                            }
-                        }
-                        else
-                        {
-                            // Reset the Animator parameter when not hovering over a piece while holding another
-                            if (hoveredPieceAnimator != null)
-                            {
-                                hoveredPieceAnimator.SetBool("HoveringWhileHolding", false);
-                            }
-                        }
+                        selectedPiece.Move(LevelManager.Instance.GetSquare(targetPos));
                     }
                     else
                     {
-                        // Reset the Animator parameter when not hovering over a piece while holding another
+                        AudioManager.Instance.PlaySound("invalidMove");
+                        selectedPiece.transform.position = initialPosition;
                         if (hoveredPieceAnimator != null)
                         {
                             hoveredPieceAnimator.SetBool("HoveringWhileHolding", false);
                         }
                     }
                 }
-            }
-
-            // Check if the left mouse button is released
-            if (Input.GetMouseButtonUp(0) && selectedPiece != null)
-            {
-                // Check if the mouse is released over a valid move
-                Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
-                RaycastHit hit;
-                if (Physics.Raycast(ray, out hit))
-                {
-                    //Round the position to the nearest integer, check if valid move
-                    Vector3 newPosition = hit.collider.transform.position;
-                    Vector2Int targetPos = new Vector2Int(Mathf.FloorToInt(newPosition.x), Mathf.FloorToInt(newPosition.z));
-                    if (selectedPiece.legalMoves.Contains(targetPos))
-                    {
-                        // Move the piece to the new position
-                        selectedPiece.Move(LevelManager.Instance.GetSquare(targetPos));
-                    }
-                    else
-                    {
-                        // Return the piece to its initial position if the move is invalid
-                        AudioManager.Instance.PlaySound("invalidMove");
-                        selectedPiece.transform.position = initialPosition;
-                    }
-                }
                 else
                 {
-                    // Return the piece to its initial position if the mouse is released outside the board
                     selectedPiece.transform.position = initialPosition;
                 }
-
-                // Reset selected piece
-                selectedPiece = null;
             }
+            else
+            {
+                selectedPiece.transform.position = initialPosition;
+            }
+
+            selectedPiece = null;
         }
     }
 }

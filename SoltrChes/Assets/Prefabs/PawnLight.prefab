@@ -12,8 +12,8 @@ GameObject:
   - component: {fileID: 33106061487518736}
   - component: {fileID: 23160403841118764}
   - component: {fileID: 6401613753039994112}
-  - component: {fileID: 8814362946829820024}
   - component: {fileID: -6183631684502763458}
+  - component: {fileID: 4414951649230249107}
   m_Layer: 0
   m_Name: PawnLight
   m_TagString: Untagged
@@ -100,29 +100,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   currentPosition: {x: 0, y: 0}
   legalMoves: []
---- !u!136 &8814362946829820024
-CapsuleCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1006356879557798}
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_IsTrigger: 0
-  m_ProvidesContacts: 0
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Radius: 0.4
-  m_Height: 1.1
-  m_Direction: 1
-  m_Center: {x: 0, y: 0.6066802, z: 0}
 --- !u!95 &-6183631684502763458
 Animator:
   serializedVersion: 5
@@ -144,3 +121,24 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
+--- !u!65 &4414951649230249107
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1006356879557798}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 0.75590956, y: 1, z: 0.654637}
+  m_Center: {x: 0, y: 0.5, z: 0}
