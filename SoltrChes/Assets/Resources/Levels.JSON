@@ -193,13 +193,13 @@
             {"type": "Pawn", "position": [5, 2]},
             {"type": "Pawn", "position": [6, 2]},
             {"type": "Pawn", "position": [6, 4]},
-            {"type": "Pawn", "position": [7, 5]},
+            {"type": "Pawn", "position": [7, 6]},
             {"type": "Knight", "position": [3, 4]},
             {"type": "Knight", "position": [4, 5]},
             {"type": "Knight", "position": [6, 3]},
             {"type": "Bishop", "position": [1, 1]},
-            {"type": "Bishop", "position": [4, 6]},
-            {"type": "King", "position": [4, 4]}            
+            {"type": "Bishop", "position": [5, 4]},
+            {"type": "King", "position": [4, 3]}            
         ]
     }
 ]
