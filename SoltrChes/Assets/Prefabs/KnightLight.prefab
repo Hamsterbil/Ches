@@ -12,8 +12,8 @@ GameObject:
   - component: {fileID: 33961714295525734}
   - component: {fileID: 23756955892116760}
   - component: {fileID: 7698712534846305455}
-  - component: {fileID: 1855778610112197896}
   - component: {fileID: -8809359844672720612}
+  - component: {fileID: 4390392076347515915}
   m_Layer: 0
   m_Name: KnightLight
   m_TagString: Untagged
@@ -100,29 +100,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   currentPosition: {x: 0, y: 0}
   legalMoves: []
---- !u!136 &1855778610112197896
-CapsuleCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1992623236052302}
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_IsTrigger: 0
-  m_ProvidesContacts: 0
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Radius: 0.4
-  m_Height: 1
-  m_Direction: 1
-  m_Center: {x: 0, y: 0.628035, z: 0.027925223}
 --- !u!95 &-8809359844672720612
 Animator:
   serializedVersion: 5
@@ -144,3 +121,24 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
+--- !u!65 &4390392076347515915
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1992623236052302}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 0.895717, y: 1.1, z: 0.83156425}
+  m_Center: {x: 0, y: 0.55, z: 0.027925223}

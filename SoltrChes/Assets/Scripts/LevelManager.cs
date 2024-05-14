@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using Newtonsoft.Json;
+using UnityEngine.Networking;
 public class LevelManager : MonoBehaviour
 {
     public static LevelManager Instance { get; private set; }
@@ -24,13 +25,15 @@ public class LevelManager : MonoBehaviour
 
         Instance = this;
         DontDestroyOnLoad(gameObject);
+
         LoadJSON();
     }
 
     private void LoadJSON()
     {
-        string jsonPath = Application.dataPath + "/StreamingAssets/Levels.json";
-        string json = System.IO.File.ReadAllText(jsonPath);
+        TextAsset jsonFile = Resources.Load<TextAsset>("Levels");
+        string json = jsonFile.text;
+
         levels = JsonConvert.DeserializeObject<LevelData[]>(json);
         foreach (LevelData level in levels)
         {

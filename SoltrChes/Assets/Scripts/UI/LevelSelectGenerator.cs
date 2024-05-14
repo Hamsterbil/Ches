@@ -15,7 +15,6 @@ public class LevelSelectGenerator : MonoBehaviour
         {
             foreach (LevelData level in LevelManager.Instance.GetLevels())
             {
-                Debug.Log(level.levelName);
                 GameObject levelButton = Instantiate(levelButtonPrefab, levelButtonContainer);
                 Button button = levelButton.GetComponent<Button>();
                 button.onClick.AddListener(() => GameManager.Instance.StartGame(level.levelNumber));

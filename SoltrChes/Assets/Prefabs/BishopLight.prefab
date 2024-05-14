@@ -10,10 +10,10 @@ GameObject:
   m_Component:
   - component: {fileID: 4626390214331530}
   - component: {fileID: 1616179555381200210}
-  - component: {fileID: 1668740615442647355}
   - component: {fileID: 3161428811537638338}
   - component: {fileID: 4549017069788231701}
   - component: {fileID: 6390464906523821294}
+  - component: {fileID: 3581891332749595761}
   m_Layer: 0
   m_Name: BishopLight
   m_TagString: Untagged
@@ -50,29 +50,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   currentPosition: {x: 0, y: 0}
   legalMoves: []
---- !u!136 &1668740615442647355
-CapsuleCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1028868664329696}
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_IsTrigger: 0
-  m_ProvidesContacts: 0
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Radius: 0.4
-  m_Height: 1.2
-  m_Direction: 1
-  m_Center: {x: 0, y: 0.75311494, z: 0}
 --- !u!33 &3161428811537638338
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -144,3 +121,24 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
+--- !u!65 &3581891332749595761
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1028868664329696}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 0.8763499, y: 1.3, z: 0.7589414}
+  m_Center: {x: 0, y: 0.7, z: 0}
